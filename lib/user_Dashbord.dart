@@ -1,9 +1,10 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter_social_button/flutter_social_button.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class UserDashbord extends StatefulWidget {
   const UserDashbord({Key? key}) : super(key: key);
@@ -21,6 +22,9 @@ class _UserDashbordState extends State<UserDashbord> {
   ];
   final CarouselController carouselController = CarouselController();
 
+  final Uri phoneNumber = Uri.parse('tel:+970-569-494-224');
+  final Uri whatsapp = Uri.parse('https://wa.me/970569494224');
+
   int currentIndex = 0;
 
   var jsonData;
@@ -33,6 +37,8 @@ class _UserDashbordState extends State<UserDashbord> {
     });
     //print(jsonData);
   }
+
+
 
   @override
   void initState() {
@@ -48,6 +54,50 @@ class _UserDashbordState extends State<UserDashbord> {
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Colors.teal,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.teal,
+          tooltip: 'whatsapp',
+          onPressed: () {},
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(30)),
+          ),
+          child: IconButton(
+            icon: const FaIcon(FontAwesomeIcons.whatsapp),
+            color: Colors.white,
+            iconSize: 35,
+            // --------------------------- Oppining Whatsapp Her -----------------------//
+            onPressed: () {
+              launchUrl(whatsapp);
+            },
+          )),
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.teal,
+        shape: const CircularNotchedRectangle(),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  //------------------------------ Go to HomePage Her --------------------------//
+                  Icons.home,
+                  color: Colors.white,
+                  size: 35,
+                )),
+            IconButton(
+                //----------------------------------- Calling Number Here ---------------------//
+                onPressed: () async {
+                  await launchUrl(phoneNumber);
+                },
+                icon: const Icon(
+                  Icons.call,
+                  color: Colors.white,
+                  size: 35,
+                ))
+          ],
+        ),
       ),
       body: Stack(
         children: [
@@ -67,7 +117,7 @@ class _UserDashbordState extends State<UserDashbord> {
             child: ClipPath(
               clipper: PannerClipper(),
               child: Container(
-                height: 220,
+                height: 230,
                 color: const Color.fromARGB(101, 0, 150, 135),
               ),
             ),
@@ -149,6 +199,7 @@ class _UserDashbordState extends State<UserDashbord> {
                   ],
                 ),
               )),
+          
         ],
       ),
     );
@@ -166,7 +217,7 @@ class PannerClipper extends CustomClipper<Path> {
 
   @override
   Path getClip(Size size) {
-    path.lineTo(0, size.height);
+    path.lineTo(0, size.height - 100);
 
     /*
     second Point Position
