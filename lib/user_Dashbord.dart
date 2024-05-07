@@ -5,6 +5,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_social_button/flutter_social_button.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:vertical_card_pager/vertical_card_pager.dart';
 
 class UserDashbord extends StatefulWidget {
   const UserDashbord({Key? key}) : super(key: key);
@@ -27,6 +28,36 @@ class _UserDashbordState extends State<UserDashbord> {
 
   int currentIndex = 0;
 
+  final List<String> titles = [
+    "RED",
+    "YELLOW",
+    "BLACK",
+    "CYAN",
+    "BLUE",
+    "GREY",
+  ];
+
+  final List<Widget> images = [
+    Container(
+      color: Colors.red,
+    ),
+    Container(
+      color: Colors.yellow,
+    ),
+    Container(
+      color: Colors.black,
+    ),
+    Container(
+      color: Colors.cyan,
+    ),
+    Container(
+      color: Colors.blue,
+    ),
+    Container(
+      color: Colors.grey,
+    ),
+  ];
+
   var jsonData;
 
   Future<void> loadJsonAsset() async {
@@ -37,8 +68,6 @@ class _UserDashbordState extends State<UserDashbord> {
     });
     //print(jsonData);
   }
-
-
 
   @override
   void initState() {
@@ -108,9 +137,26 @@ class _UserDashbordState extends State<UserDashbord> {
             child: ClipPath(
               clipper: PannerClipper(),
               child: Container(
-                height: double.infinity,
-                color: Color.fromARGB(123, 177, 255, 247),
-              ),
+                  height: double.infinity,
+                  color: const Color.fromARGB(123, 177, 255, 247),
+                  child: Expanded(
+                    child: VerticalCardPager(
+                        titles: titles, // required
+                        images: images, // required
+                        textStyle: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold), // optional
+                        onPageChanged: (page) {
+                          // optional
+                        },
+                        onSelectedItem: (index) {
+                          // optional
+                        },
+                        initialPage: 0, // optional
+                        align: ALIGN.CENTER, // optional
+                        physics: const ClampingScrollPhysics() // optional
+                        ),
+                  )),
             ),
           ),
           Container(
@@ -118,7 +164,7 @@ class _UserDashbordState extends State<UserDashbord> {
               clipper: PannerClipper(),
               child: Container(
                 height: 230,
-                color: const Color.fromARGB(101, 0, 150, 135),
+                color: Color.fromARGB(255, 0, 150, 135),
               ),
             ),
           ),
@@ -199,7 +245,6 @@ class _UserDashbordState extends State<UserDashbord> {
                   ],
                 ),
               )),
-          
         ],
       ),
     );
