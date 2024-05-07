@@ -43,6 +43,10 @@ dependencies:
   flutter_social_button: ^1.1.4+1
   font_awesome_flutter: ^10.7.0
   vertical_card_pager: ^1.6.2
+  horizontal_card_pager: ^1.1.1
+  flutter_custom_clippers: ^2.1.0
+  cached_network_image: ^3.3.1
+  sqflite: ^2.3.3+1
 
 dev_dependencies:
   flutter_test:

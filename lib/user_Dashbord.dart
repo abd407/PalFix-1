@@ -1,7 +1,10 @@
 import 'dart:convert';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter/widgets.dart';
 import 'package:flutter_social_button/flutter_social_button.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -38,42 +41,47 @@ class _UserDashbordState extends State<UserDashbord> {
   ];
 
   final List<Widget> images = [
+    Container(width: double.infinity, decoration: myBoxDecoration()),
+    Container(width: double.infinity, decoration: myBoxDecoration()),
     Container(
-      color: Colors.red,
+      width: double.infinity,
+      decoration: myBoxDecoration(),
+      child: Row(
+        children: [
+          Flex(
+            direction: Axis.vertical,
+            children: [
+              CachedNetworkImage(
+                imageUrl: "https://www.palfix.ps/content/services//5.png",
+                placeholder: (context, url) => CircularProgressIndicator(),
+                errorWidget: (context, url, error) => Icon(Icons.error),
+              ),
+            ],
+          )
+        ],
+      ),
     ),
-    Container(
-      color: Colors.yellow,
-    ),
-    Container(
-      color: Colors.black,
-    ),
-    Container(
-      color: Colors.cyan,
-    ),
-    Container(
-      color: Colors.blue,
-    ),
-    Container(
-      color: Colors.grey,
-    ),
+    Container(width: double.infinity, decoration: myBoxDecoration()),
+    Container(width: double.infinity, decoration: myBoxDecoration()),
+    Container(width: double.infinity, decoration: myBoxDecoration()),
   ];
 
   var jsonData;
 
-  Future<void> loadJsonAsset() async {
-    final String jsonString = await rootBundle.loadString('assets/data.json');
-    var data = jsonDecode(jsonString);
-    setState(() {
-      jsonData = data;
-    });
-    //print(jsonData);
-  }
+  // Future<void> loadJsonAsset() async {
+  //   final String jsonString = await rootBundle.loadString('assets/data.json');
+  //   var data = jsonDecode(jsonString);
+  //   setState(() {
+  //     jsonData = data;
+  //   });
+  //   //print(jsonData);
+  // }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    loadJsonAsset();
+    // loadJsonAsset();
   }
 
   @override
@@ -133,122 +141,160 @@ class _UserDashbordState extends State<UserDashbord> {
           /**
            * this container for the next slider 
            */
+
           Container(
             child: ClipPath(
               clipper: PannerClipper(),
               child: Container(
+                padding: const EdgeInsets.only(top: 50),
                   height: double.infinity,
-                  color: const Color.fromARGB(123, 177, 255, 247),
-                  child: Expanded(
-                    child: VerticalCardPager(
-                        titles: titles, // required
-                        images: images, // required
-                        textStyle: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold), // optional
-                        onPageChanged: (page) {
-                          // optional
-                        },
-                        onSelectedItem: (index) {
-                          // optional
-                        },
-                        initialPage: 0, // optional
-                        align: ALIGN.CENTER, // optional
-                        physics: const ClampingScrollPhysics() // optional
-                        ),
-                  )),
-            ),
-          ),
-          Container(
-            child: ClipPath(
-              clipper: PannerClipper(),
-              child: Container(
-                height: 230,
-                color: Color.fromARGB(255, 0, 150, 135),
+                color: const Color.fromARGB(122, 199, 249, 244),
+                child: Stack(children: [
+                  Positioned(
+                    bottom: 2,
+                    height: MediaQuery.of(context).size.height * .7,
+                    width: MediaQuery.of(context).size.width,
+                    child: CarouselSlider(
+                      carouselController: carouselController,
+                      options: CarouselOptions(
+                          height: 500,
+                          aspectRatio: 16 / 9,
+                          viewportFraction: 0.70,
+                          enlargeCenterPage: true),
+                      items: imageList.map((item) {
+                        return Builder(builder: (BuildContext contxt) {
+                          return Container(
+                            width: MediaQuery.of(context).size.width,
+                            decoration: myBoxDecoration(),
+                          );
+                        });
+                      }).toList(),
+                    ),
+                  )
+                ]),
+                // child: Column(children: [
+                //   Expanded(
+                //     child: VerticalCardPager(
+                //         titles: titles, // required
+                //         images: images, // required
+                //         textStyle: const TextStyle(
+                //             color: Colors.white,
+                //             fontWeight: FontWeight.bold), // optional
+                //         onPageChanged: (page) {
+                //           // optional
+                //         },
+                //         onSelectedItem: (index) {
+                //           // optional
+                //         },
+                //         initialPage: 0, // optional
+                //         align: ALIGN.CENTER, // optional
+                //         physics: const ClampingScrollPhysics() // optional
+                //         ),
+                //   )
+                // ])
               ),
             ),
           ),
-          ClipPath(
-              clipper: PannerClipper(),
-              child: Container(
-                child:
-                    //const Drawer(),
-                    Stack(
-                  children: [
-                    InkWell(
-                      onTap: () => {},
-                      child: CarouselSlider(
-                          items: imageList
-                              .map((item) => Image.network(item['image_path'],
-                                      loadingBuilder:
-                                          (context, child, loadingProgress) {
-                                    if (loadingProgress == null) {
-                                      return child;
-                                    }
-                                    return Center(
-                                      child: LoadingAnimationWidget.inkDrop(
-                                          color: Colors.teal, size: 100),
-                                    );
-                                  }, fit: BoxFit.cover, width: double.infinity))
-                              .toList(),
-                          carouselController: carouselController,
-                          options: CarouselOptions(
-                              scrollPhysics: const BouncingScrollPhysics(),
-                              autoPlay: true,
-                              aspectRatio: 2,
-                              viewportFraction: 1,
-                              onPageChanged: (index, reason) => {
-                                    setState(() {
-                                      currentIndex = index;
-                                    })
-                                  })),
-                    ),
-                    Positioned(
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        child: Stack(
-                          children: [
-                            Container(
-                              height: 20,
-                              width: double.infinity,
-                              color: const Color.fromARGB(148, 0, 150, 135),
-                              margin: const EdgeInsets.all(0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children:
-                                    imageList.asMap().entries.map((entry) {
-                                  return GestureDetector(
-                                    onTap: () => carouselController
-                                        .animateToPage(entry.key),
-                                    child: Container(
-                                      width:
-                                          currentIndex == entry.key ? 17 : 10,
-                                      height: 10.0,
-                                      margin: const EdgeInsets.symmetric(
-                                          horizontal: 3.0),
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          color: currentIndex == entry.key
-                                              ? const Color.fromARGB(
-                                                  255, 255, 255, 255)
-                                              : const Color.fromARGB(
-                                                  125, 255, 255, 255)),
-                                    ),
-                                  );
-                                }).toList(),
-                              ),
-                            ),
-                          ],
-                        )),
-                  ],
+          Container(
+            child: Stack(
+              children: [
+                InkWell(
+                  onTap: () => {},
+                  child: CarouselSlider(
+                      items: imageList
+                          .map((item) => Image.network(item['image_path'],
+                                  loadingBuilder:
+                                      (context, child, loadingProgress) {
+                                if (loadingProgress == null) {
+                                  return child;
+                                }
+                                return Center(
+                                  child: LoadingAnimationWidget.inkDrop(
+                                      color: const Color.fromARGB(255, 4, 6, 6),
+                                      size: 100),
+                                );
+                              }, fit: BoxFit.cover, width: double.infinity))
+                          .toList(),
+                      carouselController: carouselController,
+                      options: CarouselOptions(
+                          scrollPhysics: const BouncingScrollPhysics(),
+                          autoPlay: true,
+                          aspectRatio: 2,
+                          viewportFraction: 1,
+                          onPageChanged: (index, reason) => {
+                                setState(() {
+                                  currentIndex = index;
+                                })
+                              })),
                 ),
-              )),
+                Positioned(
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: Stack(
+                      children: [
+                        Container(
+                          height: 20,
+                          width: double.infinity,
+                          color: const Color.fromARGB(148, 0, 150, 135),
+                          margin: const EdgeInsets.all(0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: imageList.asMap().entries.map((entry) {
+                              return GestureDetector(
+                                onTap: () =>
+                                    carouselController.animateToPage(entry.key),
+                                child: Container(
+                                  width: currentIndex == entry.key ? 17 : 10,
+                                  height: 10.0,
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 3.0),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: currentIndex == entry.key
+                                          ? const Color.fromARGB(
+                                              255, 255, 255, 255)
+                                          : const Color.fromARGB(
+                                              125, 255, 255, 255)),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ],
+                    )),
+              ],
+            ),
+          ),
+          Container(
+            child: ClipPath(
+              clipper: PannerClipper(),
+              child: Container(height: 100, color: Colors.teal),
+            ),
+          )
         ],
       ),
     );
   }
+}
+
+BoxDecoration myBoxDecoration() {
+  return BoxDecoration(
+    border:
+        Border.all(width: 0.2, color: const Color.fromARGB(255, 208, 208, 208)),
+    borderRadius: const BorderRadius.only(
+      bottomRight: Radius.circular(50),
+      bottomLeft: Radius.circular(50),
+    ),
+    color: Colors.white,
+    boxShadow: const [
+      BoxShadow(
+        color: Color.fromARGB(255, 234, 246, 255),
+        offset: Offset(9, 9),
+        blurRadius: 6,
+      ),
+    ],
+  );
 }
 
 // ignore: slash_for_doc_comments
@@ -262,35 +308,43 @@ class PannerClipper extends CustomClipper<Path> {
 
   @override
   Path getClip(Size size) {
-    path.lineTo(0, size.height - 100);
+    // path.lineTo(0, size.height);
 
     /*
     second Point Position
     */
-    var firstStart = Offset(size.width / 7, size.height);
-    var firstEnd = Offset(size.width / 2.25, size.height - 50.0);
+    // var firstStart = Offset(size.width / 7, size.height);
+    // var firstEnd = Offset(size.width / 2.25, size.height - 30.0);
     /*
     second Line drawing
     */
-    path.quadraticBezierTo(
-        firstStart.dx, firstStart.dy, firstEnd.dx, firstEnd.dy);
+    // path.quadraticBezierTo(
+    //     firstStart.dx, firstStart.dy, firstEnd.dx, firstEnd.dy);
 
-    /*
-    Third  Point Position
-    */
-    var secondStart =
-        Offset(size.width - (size.width / 4.24), size.height - 105);
-    var secondEnd = Offset(size.width, size.height - 10);
+    // /*
+    // Third  Point Position
+    // */
+    // var secondStart =
+    //     Offset(size.width - (size.width / 2.24), size.height - 10);
+    // var secondEnd = Offset(size.width, size.height);
 
-    path.quadraticBezierTo(
-        secondStart.dx, secondStart.dy, secondEnd.dx, secondEnd.dy);
+    // path.quadraticBezierTo(
+    //     secondStart.dx, secondStart.dy, secondEnd.dx, secondEnd.dy);
 
-    path.lineTo(size.width, 0);
+    // path.lineTo(size.width, 0);
+
+    double height = size.height;
+    double width = size.width;
+
+    var path = Path();
+    path.lineTo(0, height - 85);
+    path.quadraticBezierTo(width / 2, height, width, height - 85);
+    path.lineTo(width, 0);
     path.close();
 
     return path;
   }
 
   @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+  bool shouldReclip(CustomClipper<Path> oldClipper) => true;
 }
