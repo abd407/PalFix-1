@@ -1,14 +1,9 @@
-import 'dart:convert';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:andallah/PopUpScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/services.dart' show rootBundle;
-import 'package:flutter/widgets.dart';
 import 'package:flutter_social_button/flutter_social_button.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:vertical_card_pager/vertical_card_pager.dart';
 
 class UserDashbord extends StatefulWidget {
   const UserDashbord({Key? key}) : super(key: key);
@@ -18,55 +13,138 @@ class UserDashbord extends StatefulWidget {
 }
 
 class _UserDashbordState extends State<UserDashbord> {
+
+//--------------------------------------------------------------------------------------//
+//------------------------------- Navigation Part --------------------------------------//
+//--------------------------------------------------------------------------------------//
+
+  // pushToScreen(BuildContext context) {
+  //   Navigator.of(context).push(
+  //       //MaterialPageRoute(builder: (_) => PopUpScreen()),
+  //       );
+  // }
+
+  //-----------------------------------------------------------------------------------//
+  //----------------------------- Ads Images List -------------------------------------//
+  //-----------------------------------------------------------------------------------//
   List imageList = [
     {"id": 1, 'image_path': 'https://www.palfix.ps/content/3.png'},
     {"id": 2, 'image_path': 'https://www.palfix.ps/content/4.png'},
     {"id": 3, 'image_path': 'https://www.palfix.ps/content/5.png'},
     {"id": 4, 'image_path': 'https://www.palfix.ps/content/6.png'}
   ];
-  final CarouselController carouselController = CarouselController();
 
+
+  //------------------------------------------------------------------------------------//
+  //----------------------------- Work Images List -------------------------------------//
+  //------------------------------------------------------------------------------------//
+
+  List workimageList = [
+    {
+      "id": 1,
+      'image_path': 'assets/Imgaes/1.webp',
+      'Title': 'تنظيف الخزانات ',
+      "SubTitle": "تنظيف وتعقبم الخزانات و الابار"
+    },
+    {
+      "id": 2,
+      'image_path': 'assets/Imgaes/2.webp',
+      'Title': 'حرفي',
+      "SubTitle": "كل ما بلزم البيت من الاعمال الحرفية  "
+    },
+    {
+      "id": 3,
+      'image_path': 'assets/Imgaes/3.webp',
+      'Title': 'التكييف',
+      "SubTitle": " صيانة و نركيب جميع انواع المكيقات"
+    },
+    {
+      "id": 5,
+      'image_path': 'assets/Imgaes/5.webp',
+      'Title': 'الدهان و الديكور ',
+      "SubTitle": " أحدث و أرقى الديكورات و الدهان"
+    },
+    {
+      "id": 6,
+      'image_path': 'assets/Imgaes/6.webp',
+      'Title': 'الحدائق والزراعة',
+      "SubTitle": " ترتيب وتنسيق الحدائق والورود"
+    },
+    {
+      "id": 7,
+      'image_path': 'assets/Imgaes/7.webp',
+      'Title': 'شبكات الانترنت',
+      "SubTitle": " حلول تقنية لشبكات الانترنت والتغطية"
+    },
+    {
+      "id": 8,
+      'image_path': 'assets/Imgaes/8.webp',
+      'Title': 'العزل والاسطح ',
+      "SubTitle": " عزل وحل مشاكل الاسطح والجدران من الرطوبة"
+    },
+    {
+      "id": 9,
+      'image_path': 'assets/Imgaes/9.webp',
+      'Title': 'مواسرجي',
+      "SubTitle": "صيانة كافة اعمال المواسير"
+    },
+    {
+      "id": 10,
+      'image_path': 'assets/Imgaes/10.webp',
+      'Title': 'حداد',
+      "SubTitle": "تفصيل واشغال جميع انواع الحدادة "
+    },
+    {
+      "id": 11,
+      'image_path': 'assets/Imgaes/11.webp',
+      'Title': 'صيانة اجهزة منزلية',
+      "SubTitle": "صيانة جمبع الاجهزة الكهربائية"
+    },
+    {
+      "id": 12,
+      'image_path': 'assets/Imgaes/12.webp',
+      'Title': 'كهربائي ',
+      "SubTitle": "صيانة وتمديد وحلول لكل مشاكل الكهربائية"
+    },
+    {
+      "id": 13,
+      'image_path': 'assets/Imgaes/13.webp',
+      'Title': 'نجار ',
+      "SubTitle": "كل ما بلزم بيتك من النجارة صيانة وتفصيل"
+    },
+    {
+      "id": 14,
+      'image_path': 'assets/Imgaes/14.webp',
+      'Title': ' كاميرات المراقبة و الأنذار',
+      "SubTitle": "تركيب جميع أجهزة الإنذار و الكاميرات و الحريق  "
+    },
+    {
+      "id": 15,
+      'image_path': 'assets/Imgaes/15.webp',
+      'Title': ' الألمنيوم ',
+      "SubTitle": " صيانة و تركيب كافة أشغال الألمنيوم "
+    },
+    {
+      "id": 16,
+      'image_path': 'assets/Imgaes/16.webp',
+      'Title': ' خدمة الستلايت  ',
+      "SubTitle": " خدمة صيانة و تركيب كافة أنواع الستلايت و خدمات التلفاز"
+    },
+  ];
+
+  //------------------------------------------------------------------------------------//
+  //----------------------- Carousal Controler Definition ------------------------------//
+  //------------------------------------------------------------------------------------//
+  final CarouselController carouselController = CarouselController();
+  int currentIndex = 0;
+
+  //------------------------------------------------------------------------------------//
+  //----------------------- WhatsUp and Phone Configuration ----------------------------//
+  //------------------------------------------------------------------------------------//
   final Uri phoneNumber = Uri.parse('tel:+970-569-494-224');
   final Uri whatsapp = Uri.parse('https://wa.me/970569494224');
 
-  int currentIndex = 0;
-
-  final List<String> titles = [
-    "RED",
-    "YELLOW",
-    "BLACK",
-    "CYAN",
-    "BLUE",
-    "GREY",
-  ];
-
-  final List<Widget> images = [
-    Container(width: double.infinity, decoration: myBoxDecoration()),
-    Container(width: double.infinity, decoration: myBoxDecoration()),
-    Container(
-      width: double.infinity,
-      decoration: myBoxDecoration(),
-      child: Row(
-        children: [
-          Flex(
-            direction: Axis.vertical,
-            children: [
-              CachedNetworkImage(
-                imageUrl: "https://www.palfix.ps/content/services//5.png",
-                placeholder: (context, url) => CircularProgressIndicator(),
-                errorWidget: (context, url, error) => Icon(Icons.error),
-              ),
-            ],
-          )
-        ],
-      ),
-    ),
-    Container(width: double.infinity, decoration: myBoxDecoration()),
-    Container(width: double.infinity, decoration: myBoxDecoration()),
-    Container(width: double.infinity, decoration: myBoxDecoration()),
-  ];
-
-  var jsonData;
+  // var jsonData;
 
   // Future<void> loadJsonAsset() async {
   //   final String jsonString = await rootBundle.loadString('assets/data.json');
@@ -146,26 +224,89 @@ class _UserDashbordState extends State<UserDashbord> {
             child: ClipPath(
               clipper: PannerClipper(),
               child: Container(
-                padding: const EdgeInsets.only(top: 50),
+                // padding: const EdgeInsets.only(top: 50),
                   height: double.infinity,
                 color: const Color.fromARGB(122, 199, 249, 244),
                 child: Stack(children: [
                   Positioned(
-                    bottom: 2,
+                    bottom: 20,
+                   
                     height: MediaQuery.of(context).size.height * .7,
                     width: MediaQuery.of(context).size.width,
                     child: CarouselSlider(
+                      
                       carouselController: carouselController,
                       options: CarouselOptions(
                           height: 500,
                           aspectRatio: 16 / 9,
                           viewportFraction: 0.70,
-                          enlargeCenterPage: true),
-                      items: imageList.map((item) {
+                        enlargeCenterPage: true,
+                      ),
+                      items: workimageList.map((item) {
                         return Builder(builder: (BuildContext contxt) {
                           return Container(
                             width: MediaQuery.of(context).size.width,
                             decoration: myBoxDecoration(),
+                            child: SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  const SizedBox(
+                                    height: 150,
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.only(top: 10),
+                                    clipBehavior: Clip.hardEdge,
+                                    decoration: const BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                        bottomRight: Radius.circular(50),
+                                        bottomLeft: Radius.circular(50),
+                                      ),
+                                    ),
+                                    child: GestureDetector(
+                                        onTap: () => {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ImageScreen(
+                                                              item[
+                                                                  "image_path"],
+                                                              item['Title'])))
+                                            },
+                                        child: Image.asset(
+                                          item["image_path"],
+                                          fit: BoxFit.scaleDown,
+                                        )),
+                                  ),
+                                  Text(
+                                    item['Title'],
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(
+                                    item['SubTitle'],
+                                    style: const TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.normal,
+                                        color: Color.fromARGB(255, 88, 90, 89)),
+                                  ),
+                                  ElevatedButton(
+                                    //style:ButtonStyle()
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => ImageScreen(
+                                                  item["image_path"],
+                                                  item['Title'])));
+                                    },
+                                    child: const Text('أحجز موعدا الآن'),
+                                  ),
+                                ],
+                              ),
+                            ),
                           );
                         });
                       }).toList(),
@@ -196,6 +337,7 @@ class _UserDashbordState extends State<UserDashbord> {
             ),
           ),
           Container(
+            color: Colors.teal,
             child: Stack(
               children: [
                 InkWell(
@@ -210,7 +352,7 @@ class _UserDashbordState extends State<UserDashbord> {
                                 }
                                 return Center(
                                   child: LoadingAnimationWidget.inkDrop(
-                                      color: const Color.fromARGB(255, 4, 6, 6),
+                                      color: Color.fromARGB(255, 255, 255, 255),
                                       size: 100),
                                 );
                               }, fit: BoxFit.cover, width: double.infinity))
@@ -261,27 +403,35 @@ class _UserDashbordState extends State<UserDashbord> {
                             }).toList(),
                           ),
                         ),
+                     
+                     
                       ],
                     )),
               ],
             ),
           ),
-          Container(
-            child: ClipPath(
-              clipper: PannerClipper(),
-              child: Container(height: 100, color: Colors.teal),
-            ),
-          )
+          // Container(
+          //   child: ClipPath(
+          //     clipper: PannerClipper(),
+          //     child: Container(height: 100, color: Colors.teal),
+          //   ),
+          // )
         ],
       ),
     );
   }
 }
 
+// ignore: slash_for_doc_comments
+/**-------------------------------------------------------------------
+ * ------------Define the Box Decoration For Work  -------------------
+ * ---------------- Carosl Container Content  ------------------------
+------------------------------------------------------------------- */
+
 BoxDecoration myBoxDecoration() {
   return BoxDecoration(
     border:
-        Border.all(width: 0.2, color: const Color.fromARGB(255, 208, 208, 208)),
+        Border.all(width: 0.2, color: Color.fromARGB(255, 208, 208, 208)),
     borderRadius: const BorderRadius.only(
       bottomRight: Radius.circular(50),
       bottomLeft: Radius.circular(50),
@@ -289,9 +439,9 @@ BoxDecoration myBoxDecoration() {
     color: Colors.white,
     boxShadow: const [
       BoxShadow(
-        color: Color.fromARGB(255, 234, 246, 255),
+        color: Color.fromARGB(255, 231, 231, 231),
         offset: Offset(9, 9),
-        blurRadius: 6,
+        blurRadius: 5.5,
       ),
     ],
   );
@@ -308,30 +458,7 @@ class PannerClipper extends CustomClipper<Path> {
 
   @override
   Path getClip(Size size) {
-    // path.lineTo(0, size.height);
-
-    /*
-    second Point Position
-    */
-    // var firstStart = Offset(size.width / 7, size.height);
-    // var firstEnd = Offset(size.width / 2.25, size.height - 30.0);
-    /*
-    second Line drawing
-    */
-    // path.quadraticBezierTo(
-    //     firstStart.dx, firstStart.dy, firstEnd.dx, firstEnd.dy);
-
-    // /*
-    // Third  Point Position
-    // */
-    // var secondStart =
-    //     Offset(size.width - (size.width / 2.24), size.height - 10);
-    // var secondEnd = Offset(size.width, size.height);
-
-    // path.quadraticBezierTo(
-    //     secondStart.dx, secondStart.dy, secondEnd.dx, secondEnd.dy);
-
-    // path.lineTo(size.width, 0);
+  
 
     double height = size.height;
     double width = size.width;

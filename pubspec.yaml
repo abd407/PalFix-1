@@ -72,6 +72,21 @@ flutter:
   assets:
    - assets/animation/
    - assets/json/
+   - assets/Imgaes/1.webp
+   - assets/Imgaes/2.webp
+   - assets/Imgaes/3.webp
+   - assets/Imgaes/5.webp
+   - assets/Imgaes/6.webp
+   - assets/Imgaes/7.webp
+   - assets/Imgaes/8.webp
+   - assets/Imgaes/9.webp
+   - assets/Imgaes/10.webp
+   - assets/Imgaes/11.webp
+   - assets/Imgaes/12.webp
+   - assets/Imgaes/13.webp
+   - assets/Imgaes/14.webp
+   - assets/Imgaes/15.webp
+   - assets/Imgaes/16.webp 
   
   # To add assets to your application, add an assets section, like this:
   # assets:
