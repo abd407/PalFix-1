@@ -47,6 +47,7 @@ dependencies:
   flutter_custom_clippers: ^2.1.0
   cached_network_image: ^3.3.1
   sqflite: ^2.3.3+1
+  syncfusion_flutter_datepicker: ^25.2.3
 
 dev_dependencies:
   flutter_test:

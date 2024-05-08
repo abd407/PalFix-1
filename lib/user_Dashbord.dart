@@ -313,26 +313,7 @@ class _UserDashbordState extends State<UserDashbord> {
                     ),
                   )
                 ]),
-                // child: Column(children: [
-                //   Expanded(
-                //     child: VerticalCardPager(
-                //         titles: titles, // required
-                //         images: images, // required
-                //         textStyle: const TextStyle(
-                //             color: Colors.white,
-                //             fontWeight: FontWeight.bold), // optional
-                //         onPageChanged: (page) {
-                //           // optional
-                //         },
-                //         onSelectedItem: (index) {
-                //           // optional
-                //         },
-                //         initialPage: 0, // optional
-                //         align: ALIGN.CENTER, // optional
-                //         physics: const ClampingScrollPhysics() // optional
-                //         ),
-                //   )
-                // ])
+             
               ),
             ),
           ),
@@ -410,12 +391,7 @@ class _UserDashbordState extends State<UserDashbord> {
               ],
             ),
           ),
-          // Container(
-          //   child: ClipPath(
-          //     clipper: PannerClipper(),
-          //     child: Container(height: 100, color: Colors.teal),
-          //   ),
-          // )
+         
         ],
       ),
     );
@@ -436,12 +412,12 @@ BoxDecoration myBoxDecoration() {
       bottomRight: Radius.circular(50),
       bottomLeft: Radius.circular(50),
     ),
-    color: Colors.white,
+    color: Color.fromARGB(255, 250, 253, 253),
     boxShadow: const [
       BoxShadow(
-        color: Color.fromARGB(255, 231, 231, 231),
+        color: Color.fromARGB(255, 234, 251, 255),
         offset: Offset(9, 9),
-        blurRadius: 5.5,
+        blurRadius: 5,
       ),
     ],
   );
