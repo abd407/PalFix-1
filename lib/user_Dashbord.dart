@@ -1,3 +1,4 @@
+import 'package:andallah/DrawerNav.dart';
 import 'package:andallah/PopUpScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -165,7 +166,7 @@ class _UserDashbordState extends State<UserDashbord> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const Drawer(),
+      endDrawer: const DrawerNave(),
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Colors.teal,

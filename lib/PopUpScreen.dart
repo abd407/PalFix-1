@@ -9,7 +9,7 @@ import 'package:intl/intl.dart';
 class ImageScreen extends StatefulWidget {
   final String url;
   final String title;
-  ImageScreen(this.url, this.title);
+  const ImageScreen(this.url, this.title);
 
   pushToHome(BuildContext context) {
     Navigator.of(context).push(
@@ -39,9 +39,18 @@ class _MyImageScreen extends State<ImageScreen> {
   //------------------------------------------------------------------------------------//
   final Uri phoneNumber = Uri.parse('tel:+970-569-494-224');
   final Uri whatsapp = Uri.parse('https://wa.me/970569494224');
-  ScrollController _controller = new ScrollController();
-
+  
+  //------------------------------------------------------------------------------------//
+  //----------------------- scroller and dattime Configuration -------------------------//
+  //------------------------------------------------------------------------------------//
+  final ScrollController _controller = ScrollController();
   TextEditingController dateInput = TextEditingController();
+
+
+
+  //------------------------------------------------------------------------------------//
+  //-------------------------------- Build Functio  ------------------------------------//
+  //------------------------------------------------------------------------------------//
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -139,7 +148,7 @@ class _MyImageScreen extends State<ImageScreen> {
                                     color: Color.fromARGB(255, 35, 36, 36)),
                                 border: OutlineInputBorder(
                                   borderSide:
-                                      const BorderSide(color: Colors.teal),
+                                      BorderSide(color: Colors.teal),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius:
@@ -188,7 +197,7 @@ class _MyImageScreen extends State<ImageScreen> {
                                     color: Color.fromARGB(255, 35, 36, 36)),
                                 border: OutlineInputBorder(
                                   borderSide:
-                                      const BorderSide(color: Colors.teal),
+                                      BorderSide(color: Colors.teal),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius:
@@ -237,7 +246,7 @@ class _MyImageScreen extends State<ImageScreen> {
                                     color: Color.fromARGB(255, 35, 36, 36)),
                                 border: OutlineInputBorder(
                                   borderSide:
-                                      const BorderSide(color: Colors.teal),
+                                      BorderSide(color: Colors.teal),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius:
@@ -289,7 +298,7 @@ class _MyImageScreen extends State<ImageScreen> {
                                     color: Color.fromARGB(255, 35, 36, 36)),
                                 border: OutlineInputBorder(
                                   borderSide:
-                                      const BorderSide(color: Colors.teal),
+                                      BorderSide(color: Colors.teal),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius:
@@ -315,17 +324,45 @@ class _MyImageScreen extends State<ImageScreen> {
                           //--------------------------------- Date Picker ----------------------//
                           //--------------------------------------------------------------------//
                           Container(
-                              height: 150,
+                              height: 60,
                               margin:
                                   const EdgeInsets.only(right: 30, left: 30),
                               child: TextField(
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 43, 43, 43)),
                                 controller: dateInput,
                                 //editing controller of this TextField
-                                decoration: InputDecoration(
-                                    icon: Icon(Icons
-                                        .calendar_today), //icon of text field
+                                decoration: const InputDecoration(
+                                  hintStyle: TextStyle(
+                                      color: Color(0xFFB3B1B1),
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.normal),
+                                  contentPadding: EdgeInsets.all(20),
+                                  isDense: true,
+
+                                  prefixIcon: Icon(
+                                      Icons.calendar_view_day_rounded,
+                                      color: Colors.teal), //icon of text field
                                     labelText:
-                                        "Enter Date" //label text of field
+                                        "تاريخ الحجز" //label text of field
+                                  ,
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(4)),
+                                    borderSide: BorderSide(
+                                        width: 1,
+                                        color: Color.fromARGB(255, 2, 94, 85)),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(4)),
+                                    borderSide: BorderSide(
+                                        width: 1,
+                                        color:
+                                            Color.fromARGB(255, 234, 238, 237)),
+                                  ),
+                                  filled: true,
+                                  fillColor: Color.fromARGB(255, 255, 254, 255),
                                     ),
                                 readOnly: true,
                                 //set it true, so that user will not able to edit text
@@ -354,12 +391,14 @@ class _MyImageScreen extends State<ImageScreen> {
                               )),
                           Container(
                             width: 60,
+                            margin:
+                                EdgeInsets.only(right: 30, left: 30, top: 20),
                             child: ElevatedButton(
                               //style:ButtonStyle()
                               onPressed: () {},
                               child: const Text('أحجز موعدا الآن'),
                             ),
-                            height: 70,
+                            height: 80,
                           ),
                         ],
                       ))
