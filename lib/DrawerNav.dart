@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 
 class DrawerNave extends StatelessWidget {
   const DrawerNave({super.key});
@@ -6,14 +8,19 @@ class DrawerNave extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      
         child: Directionality(
       textDirection: TextDirection.rtl,
       child: Container(
         alignment: Alignment.topRight,
+        color: Color.fromARGB(121, 224, 255, 252),
         child: ListView(
+          padding: const EdgeInsets.only(top: 0),
           children: [
             UserAccountsDrawerHeader(
+              margin: const EdgeInsets.only(bottom: 0),
               decoration:
+          
                   BoxDecoration(color: Colors.teal, shape: BoxShape.rectangle),
               accountName: const Text('PALFIX'),
               accountEmail: const Text('Repair Your Home'),
@@ -23,6 +30,15 @@ class DrawerNave extends StatelessWidget {
                 ),
               ),
             ),
+
+            Container(
+                child: ClipPath(
+              clipper: WaveClipperOne(),
+              child: Container(
+                height: 100,
+                color: Colors.teal,
+              ),
+            )),
             const ListTile(
               //leading: Icon(Icons.contactless_rounded),
               title: Text('تـــواصل معنــــا'),
@@ -38,7 +54,9 @@ class DrawerNave extends StatelessWidget {
             const ListTile(
               leading: Icon(Icons.phone),
               title: Text(' 0592151171'),
-            )
+            ),
+          
+            
           ],
         ),
       ),
