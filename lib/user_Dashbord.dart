@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:andallah/DrawerNav.dart';
 import 'package:andallah/PopUpScreen.dart';
 import 'package:flutter/material.dart';
@@ -230,89 +232,86 @@ class _UserDashbordState extends State<UserDashbord> {
                 color: const Color.fromARGB(122, 199, 249, 244),
                 child: Stack(children: [
                   Positioned(
-                    bottom: 20,
+                      bottom: 50,
+                      
                    
                     height: MediaQuery.of(context).size.height * .7,
                     width: MediaQuery.of(context).size.width,
-                    child: CarouselSlider(
-                      
-                      carouselController: carouselController,
-                      options: CarouselOptions(
-                          height: 500,
-                          aspectRatio: 16 / 9,
-                          viewportFraction: 0.70,
-                        enlargeCenterPage: true,
-                      ),
-                      items: workimageList.map((item) {
-                        return Builder(builder: (BuildContext contxt) {
+                      child: GridView.builder(
+                        itemCount: workimageList.length,
+                        itemBuilder: (context, index) {
                           return Container(
-                            width: MediaQuery.of(context).size.width,
-                            decoration: myBoxDecoration(),
-                            child: SingleChildScrollView(
-                              child: Column(
+                              decoration: myBoxDecoration(),
+                              margin: const EdgeInsets.all(5),
+                              child: SingleChildScrollView(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  child: Column(
                                 children: [
-                                  const SizedBox(
-                                    height: 150,
-                                  ),
-                                  Container(
-                                    margin: const EdgeInsets.only(top: 10),
-                                    clipBehavior: Clip.hardEdge,
-                                    decoration: const BoxDecoration(
-                                      borderRadius: BorderRadius.only(
-                                        bottomRight: Radius.circular(50),
-                                        bottomLeft: Radius.circular(50),
-                                      ),
-                                    ),
-                                    child: GestureDetector(
+                                    Padding(
+                                        padding: const EdgeInsets.only(top: 10),
+                                        child: Text(
+                                          workimageList[index]['Title'],
+                                          style: const TextStyle(
+                                            decoration:
+                                                TextDecoration.underline,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        )),
+                                    GestureDetector(
                                         onTap: () => {
                                               Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
                                                           ImageScreen(
-                                                              item[
+                                                        workimageList[index]
+                                                            [
                                                                   "image_path"],
-                                                              item['Title'])))
+                                                        workimageList[index]
+                                                            ['Title'])))
                                             },
-                                        child: Image.asset(
-                                          item["image_path"],
-                                          fit: BoxFit.scaleDown,
-                                        )),
-                                  ),
-                                  Text(
-                                    item['Title'],
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
+                                            
+                                      child: Image.asset(
+                                        workimageList[index]["image_path"],
+                                        height: 90,
+                                        width: 90,
+                                      ),
                                     ),
-                                  ),
-                                  Text(
-                                    item['SubTitle'],
+                                    Text(
+                                      
+                                      workimageList[index]['SubTitle'],
+                                      textAlign: TextAlign.center,
+                                      
                                     style: const TextStyle(
+                                      
                                         fontSize: 10,
                                         fontWeight: FontWeight.normal,
                                         color: Color.fromARGB(255, 88, 90, 89)),
                                   ),
-                                  ElevatedButton(
-                                    //style:ButtonStyle()
-                                    onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => ImageScreen(
-                                                  item["image_path"],
-                                                  item['Title'])));
-                                    },
-                                    child: const Text('أحجز موعدا الآن'),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        });
-                      }).toList(),
-                    ),
-                  )
+
+                                    ElevatedButton(
+                                      //style:ButtonStyle()
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ImageScreen(
+                                                        workimageList[index]
+                                                            ["image_path"],
+                                                        workimageList[index]
+                                                            ['Title'])));
+                                      },
+                                      child: const Text('أحجز موعدا الآن'),
+                                    ),
+                                  ])));
+                        },
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2, mainAxisSpacing: 10),
+                      ))
+                  
                 ]),
              
               ),
@@ -399,6 +398,82 @@ class _UserDashbordState extends State<UserDashbord> {
   }
 }
 
+
+
+
+
+
+
+/*{
+       items: workimageList.map((item) {
+                        return Builder(builder: (BuildContext contxt) {
+                          return Container(
+                            width: MediaQuery.of(context).size.width,
+                            decoration: myBoxDecoration(),
+                            child: SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  const SizedBox(
+                                    height: 150,
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.only(top: 10),
+                                    clipBehavior: Clip.hardEdge,
+                                    decoration: const BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                        bottomRight: Radius.circular(50),
+                                        bottomLeft: Radius.circular(50),
+                                      ),
+                                    ),
+                                    child: GestureDetector(
+                                        onTap: () => {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ImageScreen(
+                                                              item[
+                                                                  "image_path"],
+                                                              item['Title'])))
+                                            },
+                                        child: Image.asset(
+                                          item["image_path"],
+                                          fit: BoxFit.scaleDown,
+                                        )),
+                                  ),
+                                  Text(
+                                    item['Title'],
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(
+                                    item['SubTitle'],
+                                    style: const TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.normal,
+                                        color: Color.fromARGB(255, 88, 90, 89)),
+                                  ),
+                                  ElevatedButton(
+                                    //style:ButtonStyle()
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => ImageScreen(
+                                                  item["image_path"],
+                                                  item['Title'])));
+                                    },
+                                    child: const Text('أحجز موعدا الآن'),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        });
+                      }).toList(),
+}*/
 // ignore: slash_for_doc_comments
 /**-------------------------------------------------------------------
  * ------------Define the Box Decoration For Work  -------------------
