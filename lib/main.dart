@@ -1,4 +1,5 @@
-import 'package:andallah/splash_screen.dart';
+import 'package:andallah/views/splash_screen.dart';
+import 'package:andallah/views/Home.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -21,7 +22,9 @@ class MyApp extends StatelessWidget {
       ),
         home: const Directionality(
           textDirection: TextDirection.rtl,
-          child: SplashScreen(),
+          child: MyHomePage(
+            title: 'non',
+          ),
         )
       
     );
