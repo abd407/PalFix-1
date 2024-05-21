@@ -1,5 +1,3 @@
-import 'dart:math';
-import 'dart:developer';
 
 class WebSitSlider {
   final String Slide_Image;

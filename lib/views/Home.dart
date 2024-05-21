@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
-
+import 'package:andallah/services/ApiController.dart';
 import 'package:andallah/models/Services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -29,14 +29,16 @@ class _MyHomePageState extends State<MyHomePage> {
 
 // Fetch content from the json file
   Future<void> readJson() async {
+    ApiController.getServices();
+
     final String response = await rootBundle.loadString('assets/json/f.json');
     final data = await json.decode(response);
-    print(data);
+    //print(data);
     setState(() {
       _items = Services.servicesFromSnapShot(data);
     });
 
-    print(data);
+    //print(data);
   }
 
   @override
