@@ -89,9 +89,9 @@ class _UserDashbordState extends State<UserDashbord> {
 
     for (var i = 0; i < _connectionStatus.length; i++) {
       if (_connectionStatus[i] == ConnectivityResult.none) {
-        //--------------------------------------------------//
-        //--------------- Fetching data from API------------//
-        //--------------------------------------------------//
+        //--------------------------------------------------------------------------//
+        //------------------------- Fetching data from API--------------------------//
+        //--------------------------------------------------------------------------//
         
         setState(() {
           loadNoInternetConnection = true;
@@ -100,6 +100,10 @@ class _UserDashbordState extends State<UserDashbord> {
         setState(() {
           loadNoInternetConnection = false;
         });
+        //------------------------------------------------------------------------///
+        /// ----------- Re get The Data after Updating Connetion Info -------------//
+        //-------------------------------------------------------------------------//
+      
         getData();
         getSlids();
       }
