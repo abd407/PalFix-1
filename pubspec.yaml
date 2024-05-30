@@ -50,6 +50,9 @@ dependencies:
   syncfusion_flutter_datepicker: ^25.2.3
   date_picker_plus: ^3.0.2
   http: any
+  path_provider: ^2.1.3
+  provider: ^6.1.2
+  connectivity_plus: ^6.0.3
  
 
 dev_dependencies:
@@ -76,6 +79,7 @@ flutter:
   uses-material-design: true
   assets:
    - assets/animation/
+   - assets/Imgaes/NoInternetConnection.jpg
    - assets/json/f.json
    - assets/Imgaes/1.webp
    - assets/Imgaes/2.webp
