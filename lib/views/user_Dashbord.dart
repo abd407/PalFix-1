@@ -394,19 +394,16 @@ class _UserDashbordState extends State<UserDashbord> {
                                                       placeholder: (context, url) =>
                                                           LoadingAnimationWidget
                                                               .horizontalRotatingDots(
-                                                                  color:
-                                                                      const Color.fromARGB(
-                                                                          255,
-                                                                          255,
-                                                                          255,
-                                                                          255),
+                                                                  color: Colors
+                                                                      .teal,
                                                                   size: 100),
                                                       errorWidget:
                                                           (context, url, error) =>
                                                               const Icon(
                                                                   Icons.error),
                                                       fadeInDuration:
-                                                          const Duration(seconds: 3)),
+                                                          const Duration(
+                                                              seconds: 2)),
                                                   90,
                                                   90),
                                             ),
@@ -475,12 +472,12 @@ class _UserDashbordState extends State<UserDashbord> {
                                     placeholder: (context, url) =>
                                         LoadingAnimationWidget
                                             .horizontalRotatingDots(
-                                                color: Color.fromARGB(
+                                                color: const Color.fromARGB(
                                                     255, 255, 255, 255),
                                                 size: 100),
                                     errorWidget: (context, url, error) =>
                                         const Icon(Icons.error),
-                                    fadeInDuration: const Duration(seconds: 3),
+                                    fadeInDuration: const Duration(seconds: 2),
                                     fit: BoxFit.cover,
                                     width: double.infinity))
                                 .toList(),
