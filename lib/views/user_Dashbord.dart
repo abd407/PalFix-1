@@ -216,92 +216,92 @@ class _UserDashbordState extends State<UserDashbord> {
                           child: GridView.builder(
                             itemCount: _items?.length,
                             itemBuilder: (context, index) {
-                              return Container(
-                                  decoration: myBoxDecoration(),
-                                  margin: const EdgeInsets.all(5),
-                                  child: SingleChildScrollView(
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      child: Column(children: [
-                                        Padding(
-                                            padding:
-                                                const EdgeInsets.only(top: 10),
-                                            child: Text(
-                                              _items![index].Title_ar,
-                                              style: const TextStyle(
-                                                decoration:
-                                                    TextDecoration.underline,
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            )),
-                                        GestureDetector(
-                                          onTap: () => {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        ImageScreen(
-                                                            _items![index]
-                                                                .Original_img,
-                                                            _items![index]
-                                                                .Title_ar)))
-                                          },
-                                          child: _sizedContainer(
-                                              CachedNetworkImage(
-                                                  imageUrl: _items![index]
-                                                      .Original_img,
-                                                  placeholder: (context, url) =>
-                                                      LoadingAnimationWidget
-                                                          .horizontalRotatingDots(
-                                                              color:
-                                                                  const Color.fromARGB(
-                                                                      255,
-                                                                      255,
-                                                                      255,
-                                                                      255),
-                                                              size: 100),
-                                                  errorWidget: (context, url,
-                                                          error) =>
-                                                      const Icon(Icons.error),
-                                                  fadeInDuration:
-                                                      const Duration(
-                                                          seconds: 3)),
-                                              90,
-                                              90),
-
-                                      
-                                        ),
-                                        Text(
-                                          _items![index].Content_ar,
-                                          textAlign: TextAlign.center,
-                                          style: const TextStyle(
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.normal,
-                                              color: Color.fromARGB(
-                                                  255, 88, 90, 89)),
-                                        ),
-                                        ElevatedButton(
-                                          //style:ButtonStyle()
-                                          onPressed: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        ImageScreen(
-                                                            _items![index]
-                                                                .Original_img,
-                                                            _items![index]
-                                                                .Title_ar)));
-                                          },
-                                          child: const Text('أحجز موعدا الآن',
-                                              style: const TextStyle(
+                              if (_items![index].Status == 1) {
+                                return Container(
+                                    decoration: myBoxDecoration(),
+                                    margin: const EdgeInsets.all(5),
+                                    child: SingleChildScrollView(
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        child: Column(children: [
+                                          Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 10),
+                                              child: Text(
+                                                _items![index].Title_ar,
+                                                style: const TextStyle(
+                                                  decoration:
+                                                      TextDecoration.underline,
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              )),
+                                          GestureDetector(
+                                            onTap: () => {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ImageScreen(
+                                                              _items![index]
+                                                                  .Original_img,
+                                                              _items![index]
+                                                                  .Title_ar)))
+                                            },
+                                            child: _sizedContainer(
+                                                CachedNetworkImage(
+                                                    imageUrl: _items![index]
+                                                        .Original_img,
+                                                    placeholder: (context, url) =>
+                                                        LoadingAnimationWidget
+                                                            .horizontalRotatingDots(
+                                                                color:
+                                                                    const Color.fromARGB(
+                                                                        255,
+                                                                        255,
+                                                                        255,
+                                                                        255),
+                                                                size: 100),
+                                                    errorWidget: (context, url,
+                                                            error) =>
+                                                        const Icon(Icons.error),
+                                                    fadeInDuration:
+                                                        const Duration(
+                                                            seconds: 3)),
+                                                90,
+                                                90),
+                                          ),
+                                          Text(
+                                            _items![index].Content_ar,
+                                            textAlign: TextAlign.center,
+                                            style: const TextStyle(
                                                 fontSize: 10,
                                                 fontWeight: FontWeight.normal,
-                                              )),
-                                         
-                                        ),
-                                      ])));
+                                                color: Color.fromARGB(
+                                                    255, 88, 90, 89)),
+                                          ),
+                                          ElevatedButton(
+                                            //style:ButtonStyle()
+                                            onPressed: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ImageScreen(
+                                                              _items![index]
+                                                                  .Original_img,
+                                                              _items![index]
+                                                                  .Title_ar)));
+                                            },
+                                            child: const Text('أحجز موعدا الآن',
+                                                style: const TextStyle(
+                                                  fontSize: 10,
+                                                  fontWeight: FontWeight.normal,
+                                                )),
+                                          ),
+                                        ])));
+                              }
+                              
                             },
                             gridDelegate:
                                 const SliverGridDelegateWithFixedCrossAxisCount(
