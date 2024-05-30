@@ -324,76 +324,7 @@ class _UserDashbordState extends State<UserDashbord> {
   }
 }
 
-/*{
-       items: workimageList.map((item) {
-                        return Builder(builder: (BuildContext contxt) {
-                          return Container(
-                            width: MediaQuery.of(context).size.width,
-                            decoration: myBoxDecoration(),
-                            child: SingleChildScrollView(
-                              child: Column(
-                                children: [
-                                  const SizedBox(
-                                    height: 150,
-                                  ),
-                                  Container(
-                                    margin: const EdgeInsets.only(top: 10),
-                                    clipBehavior: Clip.hardEdge,
-                                    decoration: const BoxDecoration(
-                                      borderRadius: BorderRadius.only(
-                                        bottomRight: Radius.circular(50),
-                                        bottomLeft: Radius.circular(50),
-                                      ),
-                                    ),
-                                    child: GestureDetector(
-                                        onTap: () => {
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          ImageScreen(
-                                                              item[
-                                                                  "image_path"],
-                                                              item['Title'])))
-                                            },
-                                        child: Image.asset(
-                                          item["image_path"],
-                                          fit: BoxFit.scaleDown,
-                                        )),
-                                  ),
-                                  Text(
-                                    item['Title'],
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text(
-                                    item['SubTitle'],
-                                    style: const TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.normal,
-                                        color: Color.fromARGB(255, 88, 90, 89)),
-                                  ),
-                                  ElevatedButton(
-                                    //style:ButtonStyle()
-                                    onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => ImageScreen(
-                                                  item["image_path"],
-                                                  item['Title'])));
-                                    },
-                                    child: const Text('أحجز موعدا الآن'),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        });
-                      }).toList(),
-}*/
+
 // ignore: slash_for_doc_comments
 /**-------------------------------------------------------------------
  * ------------Define the Box Decoration For Work  -------------------

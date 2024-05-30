@@ -62,58 +62,16 @@ class _MyImageScreen extends State<ImageScreen> {
           backgroundColor: Colors.teal,
           iconTheme: const IconThemeData(color: Colors.white),
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: FloatingActionButton(
-            backgroundColor: Colors.teal,
-            tooltip: 'whatsapp',
-            onPressed: () {},
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(30)),
-            ),
-            child: IconButton(
-              icon: const FaIcon(FontAwesomeIcons.whatsapp),
-              color: Colors.white,
-              iconSize: 35,
-              // --------------------------- Oppining Whatsapp Her -----------------------//
-              onPressed: () {
-                launchUrl(whatsapp);
-              },
-            )),
-        bottomNavigationBar: BottomAppBar(
-          color: Colors.teal,
-          shape: const CircularNotchedRectangle(),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    //------------------------------ Go to HomePage Her --------------------------//
-                    Icons.home,
-                    color: Colors.white,
-                    size: 35,
-                  )),
-              IconButton(
-                  //----------------------------------- Calling Number Here ---------------------//
-                  onPressed: () async {
-                    await launchUrl(phoneNumber);
-                  },
-                  icon: const Icon(
-                    Icons.call,
-                    color: Colors.white,
-                    size: 35,
-                  ))
-            ],
-          ),
-        ),
+      
+       
         body: ClipPath(
           clipper: PannerClipper(),
           child: Container(
               color: const Color.fromARGB(122, 199, 249, 244),
               child: Column(
                 children: [
-                  Image.asset(url,
-                      width: MediaQuery.of(context).size.width * .4),
+                  Image.network(url,
+                      width: MediaQuery.of(context).size.width * .3),
                   Container(
                       height: 400,
                       child: ListView(
