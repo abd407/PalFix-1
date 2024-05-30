@@ -8,23 +8,25 @@ class ApiController {
 //-------------------------- Get Services List ----------------------//
 //------------------------------ From API ---------------------------//
 //-------------------------------------------------------------------//
-  static Future<List<Services>> getServices() async {
-    var url =
-        Uri.https('www.googleapis.com', '/books/v1/volumes', {'q': '{http}'});
+  static Future<List<Services>?> getServices() async {
+    var client = http.Client();
+
+    var uri = Uri.parse("https://palfix.ps/api/Home/get_Services");
+
+    //var url =
+    // Uri.https('palfix.ps', '/api/Home/get_Services', {'q': '{http}'});
     List _temp = [];
-    final response = await http.get(url);
+    final response = await client.get(uri);
 
     if (response.statusCode == 200) {
       Map data = convert.jsonDecode(response.body) as Map<String, dynamic>;
-      //Map data = json.decode(response.body);
 
       //-------------------- we need to see the data ---------------//
       //------------------- toknow how to read it correctly --------//
-      print(data['items']);
 
-      return Services.servicesFromSnapShot(_temp);
+      return Services.servicesFromSnapShot(data["result"]);
     } else {
-      print(_temp);
+      print("statusCode 2");
       return Services.servicesFromSnapShot(_temp);
     }
   }
@@ -35,17 +37,17 @@ class ApiController {
 //----------------------------------------------------------------//
   static Future<List<WebSitContacts>> getWebSitInfo() async {
     var url =
-        Uri.https('www.googleapis.com', '/books/v1/volumes', {'q': '{http}'});
+        Uri.https('palfix.ps', '/api/Home/get_Services"s', {'q': '{http}'});
     List _temp = [];
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
       Map data = convert.jsonDecode(response.body) as Map<String, dynamic>;
       //Map data = json.decode(response.body);
-
+      print(response);
       //-------------------- we need to see the data -------------//
       //------------------- toknow how to read it correctly -------//
-      print(data['items']);
+      print(data);
 
       return WebSitContacts.servicesFromSnapShot(_temp);
     } else {

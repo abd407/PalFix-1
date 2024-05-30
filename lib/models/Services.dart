@@ -16,18 +16,19 @@ class Services {
 
   factory Services.fromJson(dynamic json) {
     // --------------- get the key which is the id of the object ----------//
-    String id = json.keys.toList()[0];
+    
     //print('whatever you want to print ${id}');
     return Services(
-      Service_ID: int.parse(id),
-      Status: json[id]['status'] as int,
-      Content_ar: json[id]['cont_ar'] as String,
-      Title_ar: json[id]['title_ar'] as String,
-      Original_img: json[id]['Original_img'] as String,
+      Service_ID: int.parse(json["Service_ID"]) as int,
+      Status: int.parse(json['Status']) as int,
+      Content_ar: json['Title_ar'] as String,
+      Title_ar: json['Title_ar'] as String,
+      Original_img: json['images'] as String,
     );
   }
 
   static List<Services> servicesFromSnapShot(List snapshot) {
+   
     return snapshot.map((data) {
       return Services.fromJson(data);
     }).toList();

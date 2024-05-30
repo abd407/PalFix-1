@@ -25,20 +25,27 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-  List<Services> _items = [];
+  List<Services>? _items;
+  var isloaded = false;
 
-// Fetch content from the json file
-  Future<void> readJson() async {
-    ApiController.getServices();
+  @override
+  void initState() {
+    super.initState();
 
-    final String response = await rootBundle.loadString('assets/json/f.json');
-    final data = await json.decode(response);
-    //print(data);
-    setState(() {
-      _items = Services.servicesFromSnapShot(data);
-    });
+    // Fetching data from API
+  }
 
-    //print(data);
+  getData() async {
+    _items = await ApiController.getServices().then((data) {
+      if (data != null) {
+        isloaded = true;
+        _items = data;
+      } else {
+        _items = [];
+      }
+      print(_items);
+      return _items;
+    }).onError((error, stackTrace) {});
   }
 
   @override
@@ -89,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => readJson(),
+        onPressed: () => getData(),
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
