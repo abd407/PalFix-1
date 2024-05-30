@@ -1,5 +1,5 @@
 import 'dart:ui';
-
+import 'dart:io';
 import 'package:andallah/models/Services.dart';
 import 'package:andallah/models/WebSitSlider.dart';
 import 'package:andallah/views/DrawerNav.dart';
@@ -9,6 +9,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_social_button/flutter_social_button.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import '../services/ApiController.dart';
 
@@ -161,7 +162,9 @@ class _UserDashbordState extends State<UserDashbord> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  setState(() {});
+                },
                 icon: const Icon(
                   //------------------------------ Go to HomePage Her --------------------------//
                   Icons.home,
@@ -197,7 +200,7 @@ class _UserDashbordState extends State<UserDashbord> {
                 color: const Color.fromARGB(122, 199, 249, 244),
                 child: Stack(children: [
                   Positioned(
-                      bottom: 50,
+                      top: 200,
                       height: MediaQuery.of(context).size.height * .7,
                       width: MediaQuery.of(context).size.width,
                       // ---------------------------------------------------------------//
@@ -206,9 +209,9 @@ class _UserDashbordState extends State<UserDashbord> {
                       child: Visibility(
                           visible: isloaded,
                           replacement: Center(
-                            child: LoadingAnimationWidget.inkDrop(
+                            child: LoadingAnimationWidget.staggeredDotsWave(
                                 color: Color.fromARGB(255, 255, 255, 255),
-                                size: 200),
+                                size: 100),
                           ),
                           child: GridView.builder(
                             itemCount: _items?.length,
@@ -244,11 +247,30 @@ class _UserDashbordState extends State<UserDashbord> {
                                                             _items![index]
                                                                 .Title_ar)))
                                           },
-                                          child: Image.network(
-                                            _items![index].Original_img,
-                                            height: 90,
-                                            width: 90,
-                                          ),
+                                          child: _sizedContainer(
+                                              CachedNetworkImage(
+                                                  imageUrl: _items![index]
+                                                      .Original_img,
+                                                  placeholder: (context, url) =>
+                                                      LoadingAnimationWidget
+                                                          .horizontalRotatingDots(
+                                                              color:
+                                                                  const Color.fromARGB(
+                                                                      255,
+                                                                      255,
+                                                                      255,
+                                                                      255),
+                                                              size: 100),
+                                                  errorWidget: (context, url,
+                                                          error) =>
+                                                      const Icon(Icons.error),
+                                                  fadeInDuration:
+                                                      const Duration(
+                                                          seconds: 3)),
+                                              90,
+                                              90),
+
+                                      
                                         ),
                                         Text(
                                           _items![index].Content_ar,
@@ -272,7 +294,12 @@ class _UserDashbordState extends State<UserDashbord> {
                                                             _items![index]
                                                                 .Title_ar)));
                                           },
-                                          child: const Text('أحجز موعدا الآن'),
+                                          child: const Text('أحجز موعدا الآن',
+                                              style: const TextStyle(
+                                                fontSize: 10,
+                                                fontWeight: FontWeight.normal,
+                                              )),
+                                         
                                         ),
                                       ])));
                             },
@@ -303,18 +330,20 @@ class _UserDashbordState extends State<UserDashbord> {
                       ),
                       child: CarouselSlider(
                           items: _slids
-                              ?.map((item) => Image.network(item.images,
-                                      loadingBuilder:
-                                      (context, child, loadingProgress) {
-                                if (loadingProgress == null) {
-                                  return child;
-                                }
-                                return Center(
-                                  child: LoadingAnimationWidget.inkDrop(
-                                      color: Color.fromARGB(255, 255, 255, 255),
-                                      size: 100),
-                                );
-                                  }, fit: BoxFit.cover, width: double.infinity))
+                              ?.map((item) => CachedNetworkImage(
+                                  imageUrl: item.images,
+                                  placeholder: (context, url) =>
+                                      LoadingAnimationWidget
+                                          .horizontalRotatingDots(
+                                              color: Color.fromARGB(
+                                                  255, 255, 255, 255),
+                                              size: 100),
+                                  errorWidget: (context, url, error) =>
+                                      const Icon(Icons.error),
+                                  fadeInDuration: const Duration(seconds: 3),
+                                  fit: BoxFit.cover,
+                                  width: double.infinity))
+                                  
                               .toList(),
                           carouselController: carouselController,
                           options: CarouselOptions(
@@ -383,6 +412,15 @@ class _UserDashbordState extends State<UserDashbord> {
       ),
     );
   }
+}
+
+
+Widget _sizedContainer(Widget child, double heightof, double widthof) {
+  return SizedBox(
+    width: heightof,
+    height: widthof,
+    child: Center(child: child),
+  );
 }
 
 // ignore: slash_for_doc_comments

@@ -38,25 +38,29 @@ class SlideShowData1 {
 
 class SlideShowData {
   String slideId;
-
+  
   String images;
 
   SlideShowData({
     required this.slideId,
     required this.images,
+    
   });
 
   factory SlideShowData.fromJson(dynamic json) {
     // --------------- get the key which is the id of the object ----------//
-
+    
     return SlideShowData(
       slideId: json["Slide_ID"] as String,
       images: json['images'] as String,
+     
+     
     );
   }
 
   static List<SlideShowData> SlidesFromSnapShot(List snapshot) {
     return snapshot.map((data) {
+    
       return SlideShowData.fromJson(data);
     }).toList();
   }

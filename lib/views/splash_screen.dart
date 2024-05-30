@@ -14,13 +14,13 @@ class SplashScreen extends StatelessWidget {
         
             Center(
               child: Lottie.asset(
-                  'assets/animation/Animation - 1714861613654.json'),
+                  'assets/animation/Animation - 1717093751887.json'),
             )
         ,
        
       nextScreen: const UserDashbord(),
       duration: 4700,
-      backgroundColor: Color.fromRGBO(234, 111, 0, 1),
+      backgroundColor: Color.fromRGBO(255, 255, 255, 1),
       splashIconSize: 400,
         
         );
