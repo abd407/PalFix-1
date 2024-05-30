@@ -199,8 +199,8 @@ class _UserDashbordState extends State<UserDashbord> {
   //------------------------------------------------------------------------------------//
   //----------------------- WhatsUp and Phone Configuration ----------------------------//
   //------------------------------------------------------------------------------------//
-  final Uri phoneNumber = Uri.parse('tel:+970-569-494-224');
-  final Uri whatsapp = Uri.parse('https://wa.me/970569494224');
+  final Uri phoneNumber = Uri.parse('tel:+970-592-151-171');
+  final Uri whatsapp = Uri.parse('https://wa.me/970592151171');
 
   @override
   Widget build(BuildContext context) {
