@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:andallah/models/Services.dart';
+import 'package:andallah/models/WebSitSlider.dart';
 import 'package:andallah/views/DrawerNav.dart';
 import 'package:andallah/views/PopUpScreen.dart';
 import 'package:flutter/material.dart';
@@ -21,64 +22,100 @@ class UserDashbord extends StatefulWidget {
 class _UserDashbordState extends State<UserDashbord> {
 //--------------------------------------------------//
 //-------------- Defining Variables ----------------//
+//--------------------------------------------------//
 
-  int _counter = 0;
   List<Services>? _items;
+  List<SlideShowData>? _slids;
+
+  var isSlideLoaded = false;
   var isloaded = false;
 
 //--------------------------------------------------//
 //-------------- Defining Costructore --------------//
+//--------------------------------------------------//
   @override
   void initState() {
     super.initState();
-
-    // Fetching data from API
-
+//--------------------------------------------------//
+//--------------- Fetching data from API------------//
+//--------------------------------------------------//
     getData();
+    getSlids();
   }
 
 //--------------------------------------------------//
 //-------------- defining Function  ----------------//
 //-------------- to get remote data  ---------------//
+//--------------------------------------------------//
   getData() async {
-    print("in get data");
     _items = await ApiController.getServices().then((data) {
       if (data != null) {
-        isloaded = true;
-        print(isloaded);
+        setState(() {
+          //set is loading state to update grid
+          isloaded = true;
+        });
+
         _items = data;
       } else {
         _items = [];
+        setState(() {
+          //set is loading state to update grid
+          isloaded = false;
+        });
       }
-      print(_items);
+
       return _items;
     }).onError((error, stackTrace) {
 //--------------------------------------------------//
 //-------------- Here we should Handle    ----------//
 //-------------- Error form http requet  -----------//
-      print("error" + error.toString());
-      return null;
+     
+      _items = [];
+      setState(() {
+        //set is loading state to update grid
+        isloaded = false;
+      });
     });
   }
-//--------------------------------------------------------------------------------------//
-//------------------------------- Navigation Part --------------------------------------//
-//--------------------------------------------------------------------------------------//
 
-  // pushToScreen(BuildContext context) {
-  //   Navigator.of(context).push(
-  //       //MaterialPageRoute(builder: (_) => PopUpScreen()),
-  //       );
-  // }
+  //--------------------------------------------------//
+//-------------- defining Function  ----------------//
+//-------------- to get remote data  ---------------//
+  getSlids() async {
+    _slids = await ApiController.getSlidesContent().then((data) {
+      if (data != null) {
+        setState(() {
+          //set is loading state to update grid
+          isSlideLoaded = true;
+        });
 
-  //-----------------------------------------------------------------------------------//
-  //----------------------------- Ads Images List -------------------------------------//
-  //-----------------------------------------------------------------------------------//
-  List imageList = [
-    {"id": 1, 'image_path': 'https://www.palfix.ps/content/3.png'},
-    {"id": 2, 'image_path': 'https://www.palfix.ps/content/4.png'},
-    {"id": 3, 'image_path': 'https://www.palfix.ps/content/5.png'},
-    {"id": 4, 'image_path': 'https://www.palfix.ps/content/6.png'}
-  ];
+        print(data);
+        _slids = data;
+      } else {
+        _slids = [];
+
+        setState(() {
+          //set is loading state to update grid
+          isSlideLoaded = false;
+        });
+      }
+
+      return _slids;
+    }).onError((error, stackTrace) {
+//--------------------------------------------------//
+//-------------- Here we should Handle    ----------//
+//-------------- Error form http requet  -----------//
+
+      _slids = [];
+      setState(() {
+        //set is loading state to update grid
+        isSlideLoaded = false;
+      });
+    });
+  }
+
+
+  
 
   //------------------------------------------------------------------------------------//
   //----------------------- Carousal Controler Definition ------------------------------//
@@ -175,25 +212,27 @@ class _UserDashbordState extends State<UserDashbord> {
                           ),
                           child: GridView.builder(
                             itemCount: _items?.length,
-                        itemBuilder: (context, index) {
-                          return Container(
-                              decoration: myBoxDecoration(),
-                              margin: const EdgeInsets.all(5),
-                              child: SingleChildScrollView(
-                                  physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return Container(
+                                  decoration: myBoxDecoration(),
+                                  margin: const EdgeInsets.all(5),
+                                  child: SingleChildScrollView(
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
                                       child: Column(children: [
-                                    Padding(
-                                        padding: const EdgeInsets.only(top: 10),
-                                        child: Text(
+                                        Padding(
+                                            padding:
+                                                const EdgeInsets.only(top: 10),
+                                            child: Text(
                                               _items![index].Title_ar,
-                                          style: const TextStyle(
-                                            decoration:
-                                                TextDecoration.underline,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        )),
-                                    GestureDetector(
+                                              style: const TextStyle(
+                                                decoration:
+                                                    TextDecoration.underline,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            )),
+                                        GestureDetector(
                                           onTap: () => {
                                             Navigator.push(
                                                 context,
@@ -207,11 +246,11 @@ class _UserDashbordState extends State<UserDashbord> {
                                           },
                                           child: Image.network(
                                             _items![index].Original_img,
-                                        height: 90,
-                                        width: 90,
-                                      ),
-                                    ),
-                                    Text(
+                                            height: 90,
+                                            width: 90,
+                                          ),
+                                        ),
+                                        Text(
                                           _items![index].Content_ar,
                                           textAlign: TextAlign.center,
                                           style: const TextStyle(
@@ -220,42 +259,52 @@ class _UserDashbordState extends State<UserDashbord> {
                                               color: Color.fromARGB(
                                                   255, 88, 90, 89)),
                                         ),
-                                    ElevatedButton(
-                                      //style:ButtonStyle()
-                                      onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ImageScreen(
+                                        ElevatedButton(
+                                          //style:ButtonStyle()
+                                          onPressed: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ImageScreen(
                                                             _items![index]
                                                                 .Original_img,
                                                             _items![index]
                                                                 .Title_ar)));
-                                      },
-                                      child: const Text('أحجز موعدا الآن'),
-                                    ),
-                                  ])));
-                        },
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2, mainAxisSpacing: 10),
+                                          },
+                                          child: const Text('أحجز موعدا الآن'),
+                                        ),
+                                      ])));
+                            },
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2, mainAxisSpacing: 10),
                           )))
-              
                 ]),
               ),
             ),
           ),
+          // ----------------------------------------------------------------------//
+          //-------------------- Slides Container Starts here ---------------------//
+          //-----------------------------------------------------------------------//
           Container(
             color: Colors.teal,
             child: Stack(
               children: [
                 InkWell(
                   onTap: () => {},
-                  child: CarouselSlider(
-                      items: imageList
-                          .map((item) => Image.network(item['image_path'],
-                                  loadingBuilder:
+                  child: Visibility(
+                      visible: isSlideLoaded,
+                      replacement: Center(
+                        heightFactor: 1.2,
+                        child: LoadingAnimationWidget.inkDrop(
+                            color: Color.fromARGB(255, 255, 255, 255),
+                            size: 50),
+                      ),
+                      child: CarouselSlider(
+                          items: _slids
+                              ?.map((item) => Image.network(item.images,
+                                      loadingBuilder:
                                       (context, child, loadingProgress) {
                                 if (loadingProgress == null) {
                                   return child;
@@ -265,21 +314,24 @@ class _UserDashbordState extends State<UserDashbord> {
                                       color: Color.fromARGB(255, 255, 255, 255),
                                       size: 100),
                                 );
-                              }, fit: BoxFit.cover, width: double.infinity))
-                          .toList(),
-                      carouselController: carouselController,
-                      options: CarouselOptions(
-                          scrollPhysics: const BouncingScrollPhysics(),
-                          autoPlay: true,
-                          aspectRatio: 2,
-                          viewportFraction: 1,
-                          onPageChanged: (index, reason) => {
-                                setState(() {
-                                  currentIndex = index;
-                                })
-                              })),
-                ),
-                Positioned(
+                                  }, fit: BoxFit.cover, width: double.infinity))
+                              .toList(),
+                          carouselController: carouselController,
+                          options: CarouselOptions(
+                              scrollPhysics: const BouncingScrollPhysics(),
+                              autoPlay: true,
+                              aspectRatio: 2,
+                              viewportFraction: 1,
+                              onPageChanged: (index, reason) => {
+                                    setState(() {
+                                      currentIndex = index;
+                                    })
+                                  })))
+
+                  //-------------end slid Container -------------//
+                  ,
+                )
+                /* Positioned(
                     bottom: 0,
                     left: 0,
                     right: 0,
@@ -290,31 +342,40 @@ class _UserDashbordState extends State<UserDashbord> {
                           width: double.infinity,
                           color: const Color.fromARGB(148, 0, 150, 135),
                           margin: const EdgeInsets.all(0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: imageList.asMap().entries.map((entry) {
-                              return GestureDetector(
-                                onTap: () =>
-                                    carouselController.animateToPage(entry.key),
-                                child: Container(
-                                  width: currentIndex == entry.key ? 17 : 10,
-                                  height: 10.0,
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 3.0),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: currentIndex == entry.key
-                                          ? const Color.fromARGB(
-                                              255, 255, 255, 255)
-                                          : const Color.fromARGB(
-                                              125, 255, 255, 255)),
-                                ),
-                              );
-                            }).toList(),
-                          ),
+                          child: Visibility(
+                              visible: isSlideLoaded,
+                              replacement: Center(
+                                child: LoadingAnimationWidget.inkDrop(
+                                    color: Color.fromARGB(255, 255, 255, 255),
+                                    size: 200),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: _slids.asMap().entries.map((entry) {
+                                  return GestureDetector(
+                                    onTap: () => carouselController
+                                        .animateToPage(entry.key),
+                                    child: Container(
+                                      width:
+                                          currentIndex == entry.key ? 17 : 10,
+                                      height: 10.0,
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 3.0),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          color: currentIndex == entry.key
+                                              ? const Color.fromARGB(
+                                                  255, 255, 255, 255)
+                                              : const Color.fromARGB(
+                                                  125, 255, 255, 255)),
+                                    ),
+                                  );
+                                }).toList(),
+                              )),
                         ),
                       ],
-                    )),
+                    )), */
               ],
             ),
           ),
@@ -323,7 +384,6 @@ class _UserDashbordState extends State<UserDashbord> {
     );
   }
 }
-
 
 // ignore: slash_for_doc_comments
 /**-------------------------------------------------------------------
