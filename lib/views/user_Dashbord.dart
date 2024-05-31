@@ -108,8 +108,8 @@ class _UserDashbordState extends State<UserDashbord> {
         getSlids();
       }
     }
-    // ignore: avoid_print
-    print('Connectivity changed: $_connectionStatus');
+   
+    
   }
 
 //--------------------------------------------------//
@@ -125,7 +125,7 @@ class _UserDashbordState extends State<UserDashbord> {
           isloaded = true;
           _items = data;
         });
-        print(data);
+       
         
       } else {
         
@@ -163,7 +163,7 @@ class _UserDashbordState extends State<UserDashbord> {
           _slids = data;
         });
 
-        print(data);
+       
         
       } else {
         

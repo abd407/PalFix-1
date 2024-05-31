@@ -1,3 +1,6 @@
+import 'dart:ffi';
+
+import 'package:andallah/services/ApiController.dart';
 import 'package:andallah/views/user_Dashbord.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +28,17 @@ class ImageScreen extends StatefulWidget {
 class _MyImageScreen extends State<ImageScreen> {
   final String url;
   final String title;
+
+  String name = "";
+  var nameIsNotEmpty = false;
+  String phone = "";
+  var phoneIsNotEmpty = false;
+  String address = "";
+  var addressIsNotEmpty = false;
+  String date = "";
+  var dateIsNotEmpty = false;
+  String problem = "";
+  var problemIsNotEmpty = false;
 
   _MyImageScreen(this.url, this.title);
 
@@ -83,39 +97,46 @@ class _MyImageScreen extends State<ImageScreen> {
                           Container(
                             height: 75,
                             margin: const EdgeInsets.only(right: 30, left: 30),
-                            child: const TextField(
+                            child: TextField(
+                              onChanged: (val) {
+                                setState(() {
+                                  name = val;
+                                  nameIsNotEmpty = val == "" ? false : true;
+                                });
+                              },
                               autofocus: true,
                               cursorColor: Colors.black,
                               maxLength: 20,
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 43, 43, 43)),
+                              style: const TextStyle(
+                                  color: Color.fromRGBO(43, 43, 43, 1)),
                               decoration: InputDecoration(
                                 prefixIcon: Icon(
                                   Icons.person,
-                                  color: Colors.teal,
+                                  color:
+                                      nameIsNotEmpty ? Colors.red : Colors.teal,
                                 ),
                                 hintText: 'أكتب اسمك هنا',
-                                hintStyle: TextStyle(
+                                hintStyle: const TextStyle(
                                     color: Color(0xFFB3B1B1),
                                     fontSize: 12,
                                     fontWeight: FontWeight.normal),
-                                contentPadding: EdgeInsets.all(20),
+                                contentPadding: const EdgeInsets.all(20),
                                 isDense: true,
                                 labelText: 'الاسم',
-                                labelStyle: TextStyle(
+                                labelStyle: const TextStyle(
                                     color: Color.fromARGB(255, 35, 36, 36)),
-                                border: OutlineInputBorder(
+                                border: const OutlineInputBorder(
                                   borderSide:
                                       BorderSide(color: Colors.teal),
                                 ),
-                                focusedBorder: OutlineInputBorder(
+                                focusedBorder: const OutlineInputBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(4)),
                                   borderSide: BorderSide(
                                       width: 1,
                                       color: Color.fromARGB(255, 2, 94, 85)),
                                 ),
-                                enabledBorder: OutlineInputBorder(
+                                enabledBorder: const OutlineInputBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(4)),
                                   borderSide: BorderSide(
@@ -133,38 +154,46 @@ class _MyImageScreen extends State<ImageScreen> {
                           Container(
                             height: 75,
                             margin: const EdgeInsets.only(right: 30, left: 30),
-                            child: const TextField(
+                            child: TextField(
+                              onChanged: (val) {
+                                setState(() {
+                                  phone = val;
+                                  phoneIsNotEmpty = val == "" ? true : false;
+                                });
+                              },
                               cursorColor: Colors.black,
                               maxLength: 20,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: Color.fromARGB(255, 43, 43, 43)),
                               decoration: InputDecoration(
                                 prefixIcon: Icon(
                                   Icons.phone,
-                                  color: Colors.teal,
+                                  color: phoneIsNotEmpty
+                                      ? Colors.red
+                                      : Colors.teal,
                                 ),
                                 hintText: '05x xxx xxxx',
-                                hintStyle: TextStyle(
+                                hintStyle: const TextStyle(
                                     color: Color(0xFFB3B1B1),
                                     fontSize: 12,
                                     fontWeight: FontWeight.normal),
                                 contentPadding: EdgeInsets.all(20),
                                 isDense: true,
                                 labelText: 'الهاتف',
-                                labelStyle: TextStyle(
+                                labelStyle: const TextStyle(
                                     color: Color.fromARGB(255, 35, 36, 36)),
-                                border: OutlineInputBorder(
+                                border: const OutlineInputBorder(
                                   borderSide:
                                       BorderSide(color: Colors.teal),
                                 ),
-                                focusedBorder: OutlineInputBorder(
+                                focusedBorder: const OutlineInputBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(4)),
                                   borderSide: BorderSide(
                                       width: 1,
                                       color: Color.fromARGB(255, 2, 94, 85)),
                                 ),
-                                enabledBorder: OutlineInputBorder(
+                                enabledBorder: const OutlineInputBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(4)),
                                   borderSide: BorderSide(
@@ -182,38 +211,46 @@ class _MyImageScreen extends State<ImageScreen> {
                           Container(
                             height: 75,
                             margin: const EdgeInsets.only(right: 30, left: 30),
-                            child: const TextField(
+                            child: TextField(
+                              onChanged: (val) {
+                                setState(() {
+                                  address = val;
+                                  addressIsNotEmpty = val == "" ? false : true;
+                                });
+                              },
                               cursorColor: Colors.black,
                               maxLength: 20,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: Color.fromARGB(255, 43, 43, 43)),
                               decoration: InputDecoration(
                                 prefixIcon: Icon(
                                   Icons.home,
-                                  color: Colors.teal,
+                                  color: addressIsNotEmpty
+                                      ? Colors.red
+                                      : Colors.teal,
                                 ),
                                 hintText: 'أكتب عنوانك هنا',
-                                hintStyle: TextStyle(
+                                hintStyle: const TextStyle(
                                     color: Color(0xFFB3B1B1),
                                     fontSize: 12,
                                     fontWeight: FontWeight.normal),
                                 contentPadding: EdgeInsets.all(20),
                                 isDense: true,
                                 labelText: 'العنوان',
-                                labelStyle: TextStyle(
+                                labelStyle: const TextStyle(
                                     color: Color.fromARGB(255, 35, 36, 36)),
-                                border: OutlineInputBorder(
+                                border: const OutlineInputBorder(
                                   borderSide:
                                       BorderSide(color: Colors.teal),
                                 ),
-                                focusedBorder: OutlineInputBorder(
+                                focusedBorder: const OutlineInputBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(4)),
                                   borderSide: BorderSide(
                                       width: 1,
                                       color: Color.fromARGB(255, 2, 94, 85)),
                                 ),
-                                enabledBorder: OutlineInputBorder(
+                                enabledBorder: const OutlineInputBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(4)),
                                   borderSide: BorderSide(
@@ -232,14 +269,19 @@ class _MyImageScreen extends State<ImageScreen> {
                           Container(
                             height: 150,
                             margin: const EdgeInsets.only(right: 30, left: 30),
-                            child: const TextField(
+                            child: TextField(
+                              onChanged: (val) {
+                                setState(() {
+                                  problem = val;
+                                });
+                              },
                               cursorColor: Colors.black,
                               maxLength: 20,
                               maxLines: 5,
                               minLines: 5,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: Color.fromARGB(255, 43, 43, 43)),
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 prefixIcon: Icon(
                                   Icons.error,
                                   color: Colors.teal,
@@ -353,7 +395,9 @@ class _MyImageScreen extends State<ImageScreen> {
                                 EdgeInsets.only(right: 30, left: 30, top: 20),
                             child: ElevatedButton(
                               //style:ButtonStyle()
-                              onPressed: () {},
+                              onPressed: () {
+                                ApiController.postAppointment();
+                              },
                               child: const Text('أحجز موعدا الآن'),
                             ),
                             height: 80,

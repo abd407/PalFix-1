@@ -27,7 +27,7 @@ class ApiController {
 
       return Services.servicesFromSnapShot(data["result"]);
     } else {
-      print("statusCode 2");
+      
       return Services.servicesFromSnapShot(_temp);
     }
   }
@@ -55,7 +55,7 @@ class ApiController {
 
       return SlideShowData.SlidesFromSnapShot(data["result"]);
     } else {
-      print("statusCode 2");
+      ;
       return SlideShowData.SlidesFromSnapShot(_temp);
     }
   }
@@ -77,15 +77,42 @@ class ApiController {
     if (response.statusCode == 200) {
       Map data = convert.jsonDecode(response.body) as Map<String, dynamic>;
       //Map data = json.decode(response.body);
-      print(response);
+      
       //-------------------- we need to see the data -------------//
       //------------------- toknow how to read it correctly -------//
-      print(data);
+      
 
       return WebSitContacts.servicesFromSnapShot(_temp);
     } else {
-      print(_temp);
+      
       return WebSitContacts.servicesFromSnapShot(_temp);
     }
+  }
+
+
+//----------------------------------------------------------------//
+//--------------------- Get Web Sit Contacts List ----------------//
+//-------------------------- From API ----------------------------//
+//----------------------------------------------------------------//
+
+  static Future<String> postAppointment() async {
+    var client = http.Client();
+
+    var uri = Uri.parse("https://palfix.ps/api/Home/insert_appointment");
+
+    var result = "";
+    final response = await client
+        .post(uri, body: {
+          "appointment_name": "Hamza",
+          "appointment_tel": "599222190",
+          "appointment_address": "gaza - khanyounis",
+          "appointment_notes": "test test test test test ",
+          "appointment_date": "2024-05-03 12:18:00",
+          "services_id": "16",
+        })
+        .then((value) => result = value.statusCode.toString())
+        .onError((error, stackTrace) => result = error.toString());
+
+    return result;
   }
 }
