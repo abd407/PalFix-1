@@ -13,8 +13,15 @@ class SplashScreen extends StatelessWidget {
         splash: 
         
             Center(
+          child: Column(
+        children: [
+          Center(
               child: Lottie.asset(
-                  'assets/animation/Animation - 1717093751887.json'),
+                  'assets/animation/Animation - 1717093751887.json')),
+          Text('Welcom to Palfix @2024'),
+          Text('CopyRights @2024 Nahla I.A.M')
+        ],
+      ) 
             )
         ,
        

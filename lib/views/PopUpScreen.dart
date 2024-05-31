@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:andallah/services/ApiController.dart';
+import 'package:andallah/views/DrawerNav.dart';
 import 'package:andallah/views/user_Dashbord.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -137,6 +138,7 @@ class _MyImageScreen extends State<ImageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        endDrawer: const DrawerNave(),
         appBar: AppBar(
           title: Text(
             title,

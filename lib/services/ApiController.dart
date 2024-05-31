@@ -91,7 +91,7 @@ class ApiController {
 
 
 //----------------------------------------------------------------//
-//--------------------- Get Web Sit Contacts List ----------------//
+//----------------------- pok a new appointment  -----------------//
 //-------------------------- From API ----------------------------//
 //----------------------------------------------------------------//
 
@@ -109,19 +109,21 @@ class ApiController {
     var uri = Uri.parse("https://palfix.ps/api/Home/insert_appointment");
 
     var result = "";
+    
     final response = await client
         .post(uri, body: {
           "appointment_name": name,
           "appointment_tel": phone,
           "appointment_address": address,
           "appointment_notes": notes,
-          "appointment_date": "2024-05-03 12:18:00",
+          "appointment_date": date,
           "services_id": id_service,
         })
         .then((value) => value.statusCode >= 200 && value.statusCode <= 299
             ? dialogShower("تم ارسال الطلب بنجاح ")
             : dialogShower(
                 "حدث خطأ اثناء ارسال الطلب الرجاء التاكد من خدمة الانترنت و ارساله بوقت لاحق"))
+                
         .onError((error, stackTrace) => dialogShower(
             "حدث خطأ أثناء المعالجة كما يلي : \n\n" + error.toString()));
 

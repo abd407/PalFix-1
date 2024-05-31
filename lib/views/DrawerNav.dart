@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 
@@ -9,36 +10,57 @@ class DrawerNave extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       
+      
         child: Directionality(
       textDirection: TextDirection.rtl,
       child: Container(
         alignment: Alignment.topRight,
-        color: Color.fromARGB(121, 224, 255, 252),
+        color: Color.fromARGB(255, 223, 246, 244),
         child: ListView(
           padding: const EdgeInsets.only(top: 0),
           children: [
-            UserAccountsDrawerHeader(
-              margin: const EdgeInsets.only(bottom: 0),
-              decoration:
-          
-                  BoxDecoration(color: Colors.teal, shape: BoxShape.rectangle),
-              accountName: const Text('PALFIX'),
-              accountEmail: const Text('Repair Your Home'),
-              currentAccountPicture: CircleAvatar(
-                child: ClipOval(
-                  child: Image.asset('assets/Imgaes/PalfixLogo.jpg'),
-                ),
-              ),
-            ),
 
             Container(
                 child: ClipPath(
               clipper: WaveClipperOne(),
               child: Container(
-                height: 100,
+                height: 220,
+                padding: EdgeInsets.only(top: 60),
                 color: Colors.teal,
+                child: Center(
+                    child: Column(
+                  children: [
+                    CircleAvatar(
+                      radius: 40,
+                      child: ClipOval(
+                        child: Image.asset(
+                          'assets/Imgaes/PalfixLogo.jpg',
+                          width: 100,
+                          height: 100,
+                        ),
+                      ),
+                    ),
+                    const Text(
+                      'PALFIX',
+                      style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    const Text(
+                      'Repair Your Home',
+                      style: TextStyle(
+                        
+                          fontSize: 11,
+                          color: Color.fromARGB(255, 248, 255, 255),
+                          fontWeight: FontWeight.normal),
+                    ),
+                  ],
+                )),
               ),
             )),
+      
+         
             const ListTile(
               //leading: Icon(Icons.contactless_rounded),
               title: Text('تـــواصل معنــــا'),
