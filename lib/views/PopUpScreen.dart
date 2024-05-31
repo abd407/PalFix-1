@@ -79,9 +79,7 @@ class _MyImageScreen extends State<ImageScreen> {
     if (phone == "") {
       result += " رقم الهاتف   ";
     }
-    print("----------------- Result ---------------");
-    print(result);
-    print("----------------- Result ---------------");
+ 
 
     if (result != "") {
       result = "الرجاء ادخال البيانات التالية $result";
@@ -157,7 +155,7 @@ class _MyImageScreen extends State<ImageScreen> {
                                   nameIsNotEmpty = name == "" ? false : true;
                                  
                                 });
-                                print(name);
+                              
                               },
                               autofocus: true,
                               cursorColor: Colors.black,
@@ -435,28 +433,8 @@ class _MyImageScreen extends State<ImageScreen> {
                                 readOnly: true,
                                 //set it true, so that user will not able to edit text
                                 onTap: () async {
-                                  DateTime? pickedDate = await showDatePicker(
-                                      context: context,
-                                      initialDate: DateTime.now(),
-                                      firstDate: DateTime(1950),
-                                      //DateTime.now() - not to allow to choose before today.
-                                      lastDate: DateTime(2100));
+                                  DateTime? pickedDate = await pickDateTime();
 
-                                  if (pickedDate != null) {
-                                    print(
-                                        pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                                    String formattedDate =
-                                        DateFormat('yyyy-MM-dd')
-                                            .format(pickedDate);
-                                    print(
-                                        formattedDate); //formatted date output using intl package =>  2021-03-16
-                                    setState(() {
-                                      dateInput.text =
-                                          formattedDate;
-                                      date =
-                                          formattedDate; //set output date to TextField value.
-                                    });
-                                  } else {}
                                 },
                               )),
 
@@ -494,4 +472,60 @@ class _MyImageScreen extends State<ImageScreen> {
               )),
         ));
   }
+  //------------------------------------------------------------------------------//
+  ///----------------------------- Show Calender and Clock -----------------------//
+  ///-----------------------------------------------------------------------------//
+  Future pickDateTime() async {
+    DateTime? chosenDate = await pickDate();
+
+    //-------------------- if No Date where chosen ---------------------------------//
+    if (chosenDate == null) return;
+
+    //----------------------- if  Date where chosen ---------------------------------//
+
+    //pickedDate output format => 2021-03-10 00:00:00.000
+    String formattedDate = DateFormat('yyyy-MM-dd').format(chosenDate);
+    //formatted date output using intl package =>  2021-03-16
+    setState(() {
+      dateInput.text = formattedDate;
+      date = formattedDate; //set output date to TextField value.
+    });
+
+    print(date);
+    print(chosenDate);
+
+    //----------------------- if  Time not where chosen ------------------------------//
+    TimeOfDay? time = await PickTime();
+    if (time == null) return;
+
+    //----------------------- if  Time not where chosen ------------------------------//
+
+    //pickedDate output format => 2021-03-10 00:00:00.000
+    String timechosen = time.toString();
+    //formatted date output using intl package =>  2021-03-16
+    setState(() {
+      dateInput.text = timechosen;
+      date += ":$timechosen"; //set output date to TextField value.
+    });
+
+    print(date);
+    print(time);
+  }
+
+  //------------------------------------------------------------------------------//
+  ///----------------------------- get Date from Calender  -----------------------//
+  ///-----------------------------------------------------------------------------//
+
+  Future<DateTime?> pickDate() => showDatePicker(
+      context: context,
+      firstDate: DateTime.now(),
+      lastDate: DateTime(DateTime.now().year + 2));
+
+  //-----------------------------------------------------------------------------//
+  ///----------------------------- get Time from Clock - -------------------------//
+  ///-----------------------------------------------------------------------------//
+  Future<TimeOfDay?> PickTime() => showTimePicker(
+      context: context,
+      initialTime:
+          TimeOfDay(hour: DateTime.now().hour, minute: DateTime.now().minute));
 }
