@@ -12,7 +12,9 @@ import 'package:intl/intl.dart';
 class ImageScreen extends StatefulWidget {
   final String url;
   final String title;
-  const ImageScreen(this.url, this.title);
+  final String servic_id;
+
+  const ImageScreen(this.url, this.title, this.servic_id);
 
   pushToHome(BuildContext context) {
     Navigator.of(context).push(
@@ -21,13 +23,14 @@ class ImageScreen extends StatefulWidget {
   }
 
   @override
-  _MyImageScreen createState() => _MyImageScreen(url, title);
+  _MyImageScreen createState() => _MyImageScreen(url, title, servic_id);
 }
 
 // ignore: unused_element
 class _MyImageScreen extends State<ImageScreen> {
   final String url;
   final String title;
+  final String servic_id;
 
   String name = "";
   var nameIsNotEmpty = false;
@@ -40,12 +43,62 @@ class _MyImageScreen extends State<ImageScreen> {
   String problem = "";
   var problemIsNotEmpty = false;
 
-  _MyImageScreen(this.url, this.title);
+  var isValediate = false;
+  String ValidationString = "";
+  _MyImageScreen(this.url, this.title, this.servic_id);
 
   @override
   void initState() {
     dateInput.text = ""; //set the initial value of text field
     super.initState();
+  }
+
+
+  //------------------------------------------------------------------------------------//
+  //------------------------------- Valediate Function ---------------------------------//
+  //------------------------------------------------------------------------------------//
+  String Validate() {
+    String result = "";
+
+    if (name == "") {
+      result += " الاسم ";
+    }
+
+    if (problem == "") {
+      result += " المشكلة  ";
+    }
+
+    if (date == "") {
+      result += " الموعد   ";
+    }
+
+    if (address == "") {
+      result += " العنوان   ";
+    }
+
+    if (phone == "") {
+      result += " رقم الهاتف   ";
+    }
+    print("----------------- Result ---------------");
+    print(result);
+    print("----------------- Result ---------------");
+
+    if (result != "") {
+      result = "الرجاء ادخال البيانات التالية $result";
+      setState(() {
+        ValidationString = result;
+        isValediate = true;
+      });
+    } else {
+      setState(() {
+        ValidationString = result;
+        isValediate = false;
+        //ApiController.postAppointment(
+        //  name, phone, date, address, problem, servic_id);
+        print("$name\n$phone\n$date\n$address\n$problem\n$servic_id");
+      });
+    }
+    return result;
   }
 
   //------------------------------------------------------------------------------------//
@@ -101,8 +154,10 @@ class _MyImageScreen extends State<ImageScreen> {
                               onChanged: (val) {
                                 setState(() {
                                   name = val;
-                                  nameIsNotEmpty = val == "" ? false : true;
+                                  nameIsNotEmpty = name == "" ? false : true;
+                                 
                                 });
+                                print(name);
                               },
                               autofocus: true,
                               cursorColor: Colors.black,
@@ -113,7 +168,7 @@ class _MyImageScreen extends State<ImageScreen> {
                                 prefixIcon: Icon(
                                   Icons.person,
                                   color:
-                                      nameIsNotEmpty ? Colors.red : Colors.teal,
+                                      nameIsNotEmpty ? Colors.teal : Colors.red,
                                 ),
                                 hintText: 'أكتب اسمك هنا',
                                 hintStyle: const TextStyle(
@@ -158,7 +213,7 @@ class _MyImageScreen extends State<ImageScreen> {
                               onChanged: (val) {
                                 setState(() {
                                   phone = val;
-                                  phoneIsNotEmpty = val == "" ? true : false;
+                                  phoneIsNotEmpty = phone == "" ? false : true;
                                 });
                               },
                               cursorColor: Colors.black,
@@ -169,8 +224,8 @@ class _MyImageScreen extends State<ImageScreen> {
                                 prefixIcon: Icon(
                                   Icons.phone,
                                   color: phoneIsNotEmpty
-                                      ? Colors.red
-                                      : Colors.teal,
+                                      ? Colors.teal
+                                      : Colors.red,
                                 ),
                                 hintText: '05x xxx xxxx',
                                 hintStyle: const TextStyle(
@@ -226,8 +281,8 @@ class _MyImageScreen extends State<ImageScreen> {
                                 prefixIcon: Icon(
                                   Icons.home,
                                   color: addressIsNotEmpty
-                                      ? Colors.red
-                                      : Colors.teal,
+                                      ? Colors.teal
+                                      : Colors.red,
                                 ),
                                 hintText: 'أكتب عنوانك هنا',
                                 hintStyle: const TextStyle(
@@ -268,11 +323,13 @@ class _MyImageScreen extends State<ImageScreen> {
                           ///---------------------------------------------------------
                           Container(
                             height: 150,
-                            margin: const EdgeInsets.only(right: 30, left: 30),
+                            margin: EdgeInsets.only(right: 30, left: 30),
                             child: TextField(
                               onChanged: (val) {
                                 setState(() {
                                   problem = val;
+                                  problemIsNotEmpty =
+                                      problem == "" ? false : true;
                                 });
                               },
                               cursorColor: Colors.black,
@@ -281,33 +338,35 @@ class _MyImageScreen extends State<ImageScreen> {
                               minLines: 5,
                               style: const TextStyle(
                                   color: Color.fromARGB(255, 43, 43, 43)),
-                              decoration: const InputDecoration(
+                              decoration: InputDecoration(
                                 prefixIcon: Icon(
                                   Icons.error,
-                                  color: Colors.teal,
+                                  color: problemIsNotEmpty
+                                      ? Colors.teal
+                                      : Colors.red,
                                 ),
                                 hintText: 'العطل',
-                                hintStyle: TextStyle(
+                                hintStyle: const TextStyle(
                                     color: Color(0xFFB3B1B1),
                                     fontSize: 12,
                                     fontWeight: FontWeight.normal),
                                 contentPadding: EdgeInsets.all(20),
                                 isDense: true,
                                 labelText: 'اكتب وصف العطل',
-                                labelStyle: TextStyle(
+                                labelStyle: const TextStyle(
                                     color: Color.fromARGB(255, 35, 36, 36)),
-                                border: OutlineInputBorder(
+                                border: const OutlineInputBorder(
                                   borderSide:
                                       BorderSide(color: Colors.teal),
                                 ),
-                                focusedBorder: OutlineInputBorder(
+                                focusedBorder: const OutlineInputBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(4)),
                                   borderSide: BorderSide(
                                       width: 1,
                                       color: Color.fromARGB(255, 2, 94, 85)),
                                 ),
-                                enabledBorder: OutlineInputBorder(
+                                enabledBorder: const OutlineInputBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(4)),
                                   borderSide: BorderSide(
@@ -328,12 +387,18 @@ class _MyImageScreen extends State<ImageScreen> {
                               margin:
                                   const EdgeInsets.only(right: 30, left: 30),
                               child: TextField(
-                                style: TextStyle(
+                                onChanged: (val) {
+                                  setState(() {
+                                    date = val;
+                                    dateIsNotEmpty = date == "" ? false : true;
+                                  });
+                                },
+                                style: const TextStyle(
                                     color: Color.fromARGB(255, 43, 43, 43)),
                                 controller: dateInput,
                                 //editing controller of this TextField
-                                decoration: const InputDecoration(
-                                  hintStyle: TextStyle(
+                                decoration: InputDecoration(
+                                  hintStyle: const TextStyle(
                                       color: Color(0xFFB3B1B1),
                                       fontSize: 12,
                                       fontWeight: FontWeight.normal),
@@ -342,18 +407,21 @@ class _MyImageScreen extends State<ImageScreen> {
 
                                   prefixIcon: Icon(
                                       Icons.calendar_view_day_rounded,
-                                      color: Colors.teal), //icon of text field
+                                    color: addressIsNotEmpty
+                                        ? Colors.teal
+                                        : Colors.red,
+                                  ), //icon of text field
                                     labelText:
                                         "تاريخ الحجز" //label text of field
                                   ,
-                                  focusedBorder: OutlineInputBorder(
+                                  focusedBorder: const OutlineInputBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(4)),
                                     borderSide: BorderSide(
                                         width: 1,
                                         color: Color.fromARGB(255, 2, 94, 85)),
                                   ),
-                                  enabledBorder: OutlineInputBorder(
+                                  enabledBorder: const OutlineInputBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(4)),
                                     borderSide: BorderSide(
@@ -384,23 +452,39 @@ class _MyImageScreen extends State<ImageScreen> {
                                         formattedDate); //formatted date output using intl package =>  2021-03-16
                                     setState(() {
                                       dateInput.text =
+                                          formattedDate;
+                                      date =
                                           formattedDate; //set output date to TextField value.
                                     });
                                   } else {}
                                 },
                               )),
+
+                          //--------------------------------------------------------------------//
+                          //------------------------ Valedation Message ------------------------//
+                          //--------------------------------------------------------------------//
+                          Visibility(
+                            visible: isValediate,
+                            child: Container(
+                                height: 150,
+                                margin: EdgeInsets.only(right: 30, left: 30),
+                                child: Text(ValidationString)),
+                          ),
+                          //-----------------------------------------------------------------------//
+                          //------------------------------- pock Button ---------------------------//
+                          //-----------------------------------------------------------------------//
                           Container(
                             width: 60,
                             margin:
                                 EdgeInsets.only(right: 30, left: 30, top: 20),
+                            height: 80,
                             child: ElevatedButton(
                               //style:ButtonStyle()
                               onPressed: () {
-                                ApiController.postAppointment();
+                                Validate();
                               },
                               child: const Text('أحجز موعدا الآن'),
                             ),
-                            height: 80,
                           ),
                         ],
                       ))

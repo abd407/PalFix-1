@@ -385,7 +385,11 @@ class _UserDashbordState extends State<UserDashbord> {
                                                                 _items![index]
                                                                     .Original_img,
                                                                 _items![index]
-                                                                    .Title_ar)))
+                                                                  .Title_ar,
+                                                              _items![index]
+                                                                  .Service_ID
+                                                                  .toString()),
+                                                    ))
                                               },
                                               child: _sizedContainer(
                                                   CachedNetworkImage(
@@ -427,7 +431,10 @@ class _UserDashbordState extends State<UserDashbord> {
                                                                 _items![index]
                                                                     .Original_img,
                                                                 _items![index]
-                                                                    .Title_ar)));
+                                                                    .Title_ar,
+                                                                _items![index]
+                                                                    .Service_ID
+                                                                    .toString())));
                                               },
                                               child:
                                                   const Text('أحجز موعدا الآن',

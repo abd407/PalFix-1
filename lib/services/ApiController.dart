@@ -95,7 +95,14 @@ class ApiController {
 //-------------------------- From API ----------------------------//
 //----------------------------------------------------------------//
 
-  static Future<String> postAppointment() async {
+  static Future<String> postAppointment(
+    String name,
+    String phone,
+    String date,
+    String address,
+    String notes,
+    String id_service,
+  ) async {
     var client = http.Client();
 
     var uri = Uri.parse("https://palfix.ps/api/Home/insert_appointment");
@@ -103,12 +110,12 @@ class ApiController {
     var result = "";
     final response = await client
         .post(uri, body: {
-          "appointment_name": "Hamza",
-          "appointment_tel": "599222190",
-          "appointment_address": "gaza - khanyounis",
-          "appointment_notes": "test test test test test ",
+          "appointment_name": name,
+          "appointment_tel": phone,
+          "appointment_address": address,
+          "appointment_notes": notes,
           "appointment_date": "2024-05-03 12:18:00",
-          "services_id": "16",
+          "services_id": id_service,
         })
         .then((value) => result = value.statusCode.toString())
         .onError((error, stackTrace) => result = error.toString());
