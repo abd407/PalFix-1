@@ -537,7 +537,7 @@ class _MyImageScreen extends State<ImageScreen> {
       //set output date to TextField value.
     });
 
-    print("this is the final date --------- $date  $dateIsNotEmpty");
+   
   }
 
   //------------------------------------------------------------------------------//
@@ -555,6 +555,7 @@ class _MyImageScreen extends State<ImageScreen> {
   ///-----------------------------------------------------------------------------//
   Future<TimeOfDay?> PickTime() => showTimePicker(
       context: context,
+      
       initialTime:
           TimeOfDay(hour: DateTime.now().hour, minute: DateTime.now().minute));
 }
