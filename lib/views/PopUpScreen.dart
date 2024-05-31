@@ -54,11 +54,11 @@ class _MyImageScreen extends State<ImageScreen> {
     super.initState();
   }
 
-
   //------------------------------------------------------------------------------------//
   //------------------------------- Valediate Function ---------------------------------//
   //------------------------------------------------------------------------------------//
   String Validate() {
+    Future<String> respo;
     String result = "";
 
     if (name == "") {
@@ -69,7 +69,7 @@ class _MyImageScreen extends State<ImageScreen> {
       result += " العطل  ";
     }
 
-    if (date == "") {
+    if (date == "" && !dateIsNotEmpty) {
       result += " الموعد   ";
     }
 
@@ -80,7 +80,6 @@ class _MyImageScreen extends State<ImageScreen> {
     if (phone == "" && phone.length != 10) {
       result += " رقم الهاتف خاطئ ";
     }
- 
 
     if (result != "") {
       result = "الرجاء ادخال البيانات التالية $result";
@@ -89,30 +88,48 @@ class _MyImageScreen extends State<ImageScreen> {
         isValediate = true;
       });
     } else {
+      // setthe status of the page
+      // semt the data to the server
+      // show dialog to get the returened message
+      // return to main page
       setState(() {
         ValidationString = result;
         isValediate = false;
-        //ApiController.postAppointment(
-        //  name, phone, date, address, problem, servic_id);
-        print("$name\n$phone\n$date\n$address\n$problem\n$servic_id");
+        ApiController.postAppointment(
+            name, phone, date, address, problem, servic_id, ShowDialog);
       });
     }
+
     return result;
   }
 
+  //----------------------------------------------------------------------------------//
+  //----------------- Open Dialog to Insure that the Appoitment is send --------------//
+  //----------------------------------------------------------------------------------//
+
+  ShowDialog(String result) => showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('عملية الحجز '),
+          content: Text(result),
+          actions: [
+            TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text("حسنا"))
+          ],
+        ),
+      );
   //------------------------------------------------------------------------------------//
   //----------------------- WhatsUp and Phone Configuration ----------------------------//
   //------------------------------------------------------------------------------------//
   final Uri phoneNumber = Uri.parse('tel:+970-569-494-224');
   final Uri whatsapp = Uri.parse('https://wa.me/970569494224');
-  
+
   //------------------------------------------------------------------------------------//
   //----------------------- scroller and dattime Configuration -------------------------//
   //------------------------------------------------------------------------------------//
   final ScrollController _controller = ScrollController();
   TextEditingController dateInput = TextEditingController();
-
-
 
   //------------------------------------------------------------------------------------//
   //-------------------------------- Build Functio  ------------------------------------//
@@ -128,8 +145,6 @@ class _MyImageScreen extends State<ImageScreen> {
           backgroundColor: Colors.teal,
           iconTheme: const IconThemeData(color: Colors.white),
         ),
-      
-       
         body: ClipPath(
           clipper: PannerClipper(),
           child: Container(
@@ -154,9 +169,7 @@ class _MyImageScreen extends State<ImageScreen> {
                                 setState(() {
                                   name = val;
                                   nameIsNotEmpty = name == "" ? false : true;
-                                 
                                 });
-                              
                               },
                               autofocus: true,
                               cursorColor: Colors.black,
@@ -180,8 +193,7 @@ class _MyImageScreen extends State<ImageScreen> {
                                 labelStyle: const TextStyle(
                                     color: Color.fromARGB(255, 35, 36, 36)),
                                 border: const OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Colors.teal),
+                                  borderSide: BorderSide(color: Colors.teal),
                                 ),
                                 focusedBorder: const OutlineInputBorder(
                                   borderRadius:
@@ -239,8 +251,7 @@ class _MyImageScreen extends State<ImageScreen> {
                                 labelStyle: const TextStyle(
                                     color: Color.fromARGB(255, 35, 36, 36)),
                                 border: const OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Colors.teal),
+                                  borderSide: BorderSide(color: Colors.teal),
                                 ),
                                 focusedBorder: const OutlineInputBorder(
                                   borderRadius:
@@ -296,8 +307,7 @@ class _MyImageScreen extends State<ImageScreen> {
                                 labelStyle: const TextStyle(
                                     color: Color.fromARGB(255, 35, 36, 36)),
                                 border: const OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Colors.teal),
+                                  borderSide: BorderSide(color: Colors.teal),
                                 ),
                                 focusedBorder: const OutlineInputBorder(
                                   borderRadius:
@@ -357,8 +367,7 @@ class _MyImageScreen extends State<ImageScreen> {
                                 labelStyle: const TextStyle(
                                     color: Color.fromARGB(255, 35, 36, 36)),
                                 border: const OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Colors.teal),
+                                  borderSide: BorderSide(color: Colors.teal),
                                 ),
                                 focusedBorder: const OutlineInputBorder(
                                   borderRadius:
@@ -391,7 +400,6 @@ class _MyImageScreen extends State<ImageScreen> {
                                 onChanged: (val) {
                                   setState(() {
                                     date = val;
-                                   
                                   });
                                 },
                                 style: const TextStyle(
@@ -407,13 +415,12 @@ class _MyImageScreen extends State<ImageScreen> {
                                   isDense: true,
 
                                   prefixIcon: Icon(
-                                      Icons.calendar_view_day_rounded,
+                                    Icons.calendar_view_day_rounded,
                                     color: addressIsNotEmpty
                                         ? Colors.teal
                                         : Colors.red,
                                   ), //icon of text field
-                                    labelText:
-                                        "تاريخ الحجز" //label text of field
+                                  labelText: "تاريخ الحجز" //label text of field
                                   ,
                                   focusedBorder: const OutlineInputBorder(
                                     borderRadius:
@@ -432,12 +439,11 @@ class _MyImageScreen extends State<ImageScreen> {
                                   ),
                                   filled: true,
                                   fillColor: Color.fromARGB(255, 255, 254, 255),
-                                    ),
+                                ),
                                 readOnly: true,
                                 //set it true, so that user will not able to edit text
                                 onTap: () async {
                                   DateTime? pickedDate = await pickDateTime();
-
                                 },
                               )),
 
@@ -475,12 +481,11 @@ class _MyImageScreen extends State<ImageScreen> {
                           ),
                         ],
                       ))
-
-                
                 ],
               )),
         ));
   }
+
   //------------------------------------------------------------------------------//
   ///----------------------------- Show Calender and Clock -----------------------//
   ///-----------------------------------------------------------------------------//
@@ -506,8 +511,6 @@ class _MyImageScreen extends State<ImageScreen> {
       dateIsNotEmpty = true; //set output date to TextField value.
     });
 
-   
-
     //----------------------- if  Time not where chosen ------------------------------//
     TimeOfDay? time = await PickTime();
     if (time == null) {
@@ -515,14 +518,14 @@ class _MyImageScreen extends State<ImageScreen> {
         dateIsNotEmpty = false;
       });
       return;
-    }  
+    }
 
     //----------------------- if  Time not where chosen ------------------------------//
 
     //pickedDate output format => 2021-03-10 00:00:00.000
     String hour = time.hour.toString();
     String minuts = time.minute.toString();
-   
+
     //formatted date output using intl package =>  2021-03-16
     setState(() {
       dateInput.text = "$date:$hour:$minuts";
@@ -533,7 +536,6 @@ class _MyImageScreen extends State<ImageScreen> {
     });
 
     print("this is the final date --------- $date  $dateIsNotEmpty");
-    
   }
 
   //------------------------------------------------------------------------------//

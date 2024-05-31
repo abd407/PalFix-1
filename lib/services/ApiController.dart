@@ -95,13 +95,14 @@ class ApiController {
 //-------------------------- From API ----------------------------//
 //----------------------------------------------------------------//
 
-  static Future<String> postAppointment(
+  static Future postAppointment(
     String name,
     String phone,
     String date,
     String address,
     String notes,
     String id_service,
+      Function dialogShower
   ) async {
     var client = http.Client();
 
@@ -117,9 +118,13 @@ class ApiController {
           "appointment_date": "2024-05-03 12:18:00",
           "services_id": id_service,
         })
-        .then((value) => result = value.statusCode.toString())
-        .onError((error, stackTrace) => result = error.toString());
+        .then((value) => value.statusCode >= 200 && value.statusCode <= 299
+            ? dialogShower("تم ارسال الطلب بنجاح ")
+            : dialogShower(
+                "حدث خطأ اثناء ارسال الطلب الرجاء التاكد من خدمة الانترنت و ارساله بوقت لاحق"))
+        .onError((error, stackTrace) => dialogShower(
+            "حدث خطأ أثناء المعالجة كما يلي : \n\n" + error.toString()));
 
-    return result;
+    
   }
 }
