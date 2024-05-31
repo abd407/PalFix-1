@@ -502,8 +502,8 @@ class _UserDashbordState extends State<UserDashbord> {
 
                     //-------------end slid Container -------------//
                     ,
-                  )
-                  /* Positioned(
+                  ),
+                  Positioned(
                     bottom: 0,
                     left: 0,
                     right: 0,
@@ -521,33 +521,13 @@ class _UserDashbordState extends State<UserDashbord> {
                                     color: Color.fromARGB(255, 255, 255, 255),
                                     size: 200),
                               ),
-                              child: Row(
+                                child: const Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: _slids.asMap().entries.map((entry) {
-                                  return GestureDetector(
-                                    onTap: () => carouselController
-                                        .animateToPage(entry.key),
-                                    child: Container(
-                                      width:
-                                          currentIndex == entry.key ? 17 : 10,
-                                      height: 10.0,
-                                      margin: const EdgeInsets.symmetric(
-                                          horizontal: 3.0),
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          color: currentIndex == entry.key
-                                              ? const Color.fromARGB(
-                                                  255, 255, 255, 255)
-                                              : const Color.fromARGB(
-                                                  125, 255, 255, 255)),
-                                    ),
-                                  );
-                                }).toList(),
+                                
                               )),
                         ),
                       ],
-                    )), */
+                      )), 
                 ],
               ),
             ),
