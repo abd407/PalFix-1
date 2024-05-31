@@ -4,6 +4,7 @@ import 'package:andallah/services/ApiController.dart';
 import 'package:andallah/views/user_Dashbord.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_social_button/flutter_social_button.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -65,7 +66,7 @@ class _MyImageScreen extends State<ImageScreen> {
     }
 
     if (problem == "") {
-      result += " المشكلة  ";
+      result += " العطل  ";
     }
 
     if (date == "") {
@@ -76,8 +77,8 @@ class _MyImageScreen extends State<ImageScreen> {
       result += " العنوان   ";
     }
 
-    if (phone == "") {
-      result += " رقم الهاتف   ";
+    if (phone == "" && phone.length != 10) {
+      result += " رقم الهاتف خاطئ ";
     }
  
 
@@ -208,10 +209,12 @@ class _MyImageScreen extends State<ImageScreen> {
                             height: 75,
                             margin: const EdgeInsets.only(right: 30, left: 30),
                             child: TextField(
+                              keyboardType: TextInputType.phone,
                               onChanged: (val) {
                                 setState(() {
                                   phone = val;
-                                  phoneIsNotEmpty = phone == "" ? false : true;
+                                  phoneIsNotEmpty =
+                                      phone.length != 10 ? false : true;
                                 });
                               },
                               cursorColor: Colors.black,
@@ -225,7 +228,7 @@ class _MyImageScreen extends State<ImageScreen> {
                                       ? Colors.teal
                                       : Colors.red,
                                 ),
-                                hintText: '05x xxx xxxx',
+                                hintText: '05xxxxxxxx',
                                 hintStyle: const TextStyle(
                                     color: Color(0xFFB3B1B1),
                                     fontSize: 12,
@@ -444,9 +447,15 @@ class _MyImageScreen extends State<ImageScreen> {
                           Visibility(
                             visible: isValediate,
                             child: Container(
-                                height: 150,
+                                height: 50,
                                 margin: EdgeInsets.only(right: 30, left: 30),
-                                child: Text(ValidationString)),
+                                child: Text(
+                                  ValidationString,
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                      color: Colors.red,
+                                      fontWeight: FontWeight.w200),
+                                )),
                           ),
                           //-----------------------------------------------------------------------//
                           //------------------------------- pock Button ---------------------------//
