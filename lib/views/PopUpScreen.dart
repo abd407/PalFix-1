@@ -388,7 +388,7 @@ class _MyImageScreen extends State<ImageScreen> {
                                 onChanged: (val) {
                                   setState(() {
                                     date = val;
-                                    dateIsNotEmpty = date == "" ? false : true;
+                                   
                                   });
                                 },
                                 style: const TextStyle(
@@ -479,7 +479,12 @@ class _MyImageScreen extends State<ImageScreen> {
     DateTime? chosenDate = await pickDate();
 
     //-------------------- if No Date where chosen ---------------------------------//
-    if (chosenDate == null) return;
+    if (chosenDate == null) {
+      setState(() {
+        dateIsNotEmpty = false;
+      });
+      return;
+    }
 
     //----------------------- if  Date where chosen ---------------------------------//
 
@@ -488,28 +493,38 @@ class _MyImageScreen extends State<ImageScreen> {
     //formatted date output using intl package =>  2021-03-16
     setState(() {
       dateInput.text = formattedDate;
-      date = formattedDate; //set output date to TextField value.
+      date = formattedDate;
+      dateIsNotEmpty = true; //set output date to TextField value.
     });
 
-    print(date);
-    print(chosenDate);
+   
 
     //----------------------- if  Time not where chosen ------------------------------//
     TimeOfDay? time = await PickTime();
-    if (time == null) return;
+    if (time == null) {
+      setState(() {
+        dateIsNotEmpty = false;
+      });
+      return;
+    }  
 
     //----------------------- if  Time not where chosen ------------------------------//
 
     //pickedDate output format => 2021-03-10 00:00:00.000
-    String timechosen = time.toString();
+    String hour = time.hour.toString();
+    String minuts = time.minute.toString();
+   
     //formatted date output using intl package =>  2021-03-16
     setState(() {
-      dateInput.text = timechosen;
-      date += ":$timechosen"; //set output date to TextField value.
+      dateInput.text = "$date:$hour:$minuts";
+      date = "$date $hour:$minuts:00";
+      dateIsNotEmpty = true;
+      dateInput.text = date;
+      //set output date to TextField value.
     });
 
-    print(date);
-    print(time);
+    print("this is the final date --------- $date  $dateIsNotEmpty");
+    
   }
 
   //------------------------------------------------------------------------------//
@@ -518,6 +533,7 @@ class _MyImageScreen extends State<ImageScreen> {
 
   Future<DateTime?> pickDate() => showDatePicker(
       context: context,
+      initialDate: DateTime.now(),
       firstDate: DateTime.now(),
       lastDate: DateTime(DateTime.now().year + 2));
 
