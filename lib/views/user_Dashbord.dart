@@ -1,9 +1,7 @@
-import 'dart:ui';
-import 'dart:io';
-import 'package:andallah/models/Services.dart';
-import 'package:andallah/models/WebSitSlider.dart';
-import 'package:andallah/views/DrawerNav.dart';
-import 'package:andallah/views/PopUpScreen.dart';
+import 'package:palfix/models/Services.dart';
+import 'package:palfix/models/WebSitSlider.dart';
+import 'package:palfix/views/DrawerNav.dart';
+import 'package:palfix/views/PopUpScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_social_button/flutter_social_button.dart';

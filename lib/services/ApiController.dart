@@ -1,7 +1,7 @@
 import 'dart:convert' as convert;
-import 'package:andallah/models/Services.dart';
-import 'package:andallah/models/WebSitContacts.dart';
-import 'package:andallah/models/WebSitSlider.dart';
+import 'package:palfix/models/Services.dart';
+import 'package:palfix/models/WebSitContacts.dart';
+import 'package:palfix/models/WebSitSlider.dart';
 import 'package:http/http.dart' as http;
 
 class ApiController {

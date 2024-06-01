@@ -1,5 +1,5 @@
-import 'package:andallah/views/splash_screen.dart';
-import 'package:andallah/views/Home.dart';
+import 'package:palfix/views/splash_screen.dart';
+import 'package:palfix/views/Home.dart';
 import 'package:flutter/material.dart';
 
 void main() {

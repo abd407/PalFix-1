@@ -1,4 +1,4 @@
-package com.example.andallah
+package com.example.palfix
 
 import io.flutter.embedding.android.FlutterActivity
 

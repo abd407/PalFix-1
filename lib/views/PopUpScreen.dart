@@ -1,26 +1,22 @@
 import 'dart:ffi';
 
-import 'package:andallah/services/ApiController.dart';
-import 'package:andallah/views/DrawerNav.dart';
-import 'package:andallah/views/user_Dashbord.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:palfix/services/ApiController.dart';
+import 'package:palfix/views/DrawerNav.dart';
+import 'package:palfix/views/user_Dashbord.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_social_button/flutter_social_button.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
+
 
 class ImageScreen extends StatefulWidget {
   final String url;
   final String title;
   final String servic_id;
 
-  const ImageScreen(this.url, this.title, this.servic_id);
+  const ImageScreen(this.url, this.title, this.servic_id, {super.key});
 
   pushToHome(BuildContext context) {
     Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => UserDashbord()),
+      MaterialPageRoute(builder: (_) => const UserDashbord()),
     );
   }
 
@@ -58,7 +54,7 @@ class _MyImageScreen extends State<ImageScreen> {
   //------------------------------------------------------------------------------------//
   //------------------------------- Valediate Function ---------------------------------//
   //------------------------------------------------------------------------------------//
-  String Validate() {
+  String validate() {
     Future<String> respo;
     String result = "";
 
@@ -97,7 +93,7 @@ class _MyImageScreen extends State<ImageScreen> {
         ValidationString = result;
         isValediate = false;
         ApiController.postAppointment(
-            name, phone, date, address, problem, servic_id, ShowDialog);
+            name, phone, date, address, problem, servic_id, showDialogResult);
       });
     }
 
@@ -108,7 +104,7 @@ class _MyImageScreen extends State<ImageScreen> {
   //----------------- Open Dialog to Insure that the Appoitment is send --------------//
   //----------------------------------------------------------------------------------//
 
-  ShowDialog(String result) => showDialog(
+  showDialogResult(String result) => showDialog(
         context: context,
         builder: (context) => AlertDialog(
           title: const Text('عملية الحجز '),
@@ -213,7 +209,8 @@ class _MyImageScreen extends State<ImageScreen> {
                                           Color.fromARGB(255, 234, 238, 237)),
                                 ),
                                 filled: true,
-                                fillColor: Color.fromARGB(255, 255, 254, 255),
+                                fillColor:
+                                    const Color.fromARGB(255, 255, 254, 255),
                               ),
                             ),
                           ),
@@ -247,7 +244,7 @@ class _MyImageScreen extends State<ImageScreen> {
                                     color: Color(0xFFB3B1B1),
                                     fontSize: 12,
                                     fontWeight: FontWeight.normal),
-                                contentPadding: EdgeInsets.all(20),
+                                contentPadding: const EdgeInsets.all(20),
                                 isDense: true,
                                 labelText: 'الهاتف',
                                 labelStyle: const TextStyle(
@@ -271,7 +268,8 @@ class _MyImageScreen extends State<ImageScreen> {
                                           Color.fromARGB(255, 234, 238, 237)),
                                 ),
                                 filled: true,
-                                fillColor: Color.fromARGB(255, 255, 254, 255),
+                                fillColor:
+                                    const Color.fromARGB(255, 255, 254, 255),
                               ),
                             ),
                           ),
@@ -303,7 +301,7 @@ class _MyImageScreen extends State<ImageScreen> {
                                     color: Color(0xFFB3B1B1),
                                     fontSize: 12,
                                     fontWeight: FontWeight.normal),
-                                contentPadding: EdgeInsets.all(20),
+                                contentPadding: const EdgeInsets.all(20),
                                 isDense: true,
                                 labelText: 'العنوان',
                                 labelStyle: const TextStyle(
@@ -327,7 +325,8 @@ class _MyImageScreen extends State<ImageScreen> {
                                           Color.fromARGB(255, 234, 238, 237)),
                                 ),
                                 filled: true,
-                                fillColor: Color.fromARGB(255, 255, 254, 255),
+                                fillColor:
+                                    const Color.fromARGB(255, 255, 254, 255),
                               ),
                             ),
                           ),
@@ -336,7 +335,7 @@ class _MyImageScreen extends State<ImageScreen> {
                           ///---------------------------------------------------------
                           Container(
                             height: 150,
-                            margin: EdgeInsets.only(right: 30, left: 30),
+                            margin: const EdgeInsets.only(right: 30, left: 30),
                             child: TextField(
                               onChanged: (val) {
                                 setState(() {
@@ -363,7 +362,7 @@ class _MyImageScreen extends State<ImageScreen> {
                                     color: Color(0xFFB3B1B1),
                                     fontSize: 12,
                                     fontWeight: FontWeight.normal),
-                                contentPadding: EdgeInsets.all(20),
+                                contentPadding: const EdgeInsets.all(20),
                                 isDense: true,
                                 labelText: 'اكتب وصف العطل',
                                 labelStyle: const TextStyle(
@@ -387,7 +386,8 @@ class _MyImageScreen extends State<ImageScreen> {
                                           Color.fromARGB(255, 234, 238, 237)),
                                 ),
                                 filled: true,
-                                fillColor: Color.fromARGB(255, 255, 254, 255),
+                                fillColor:
+                                    const Color.fromARGB(255, 255, 254, 255),
                               ),
                             ),
                           ),
@@ -413,7 +413,7 @@ class _MyImageScreen extends State<ImageScreen> {
                                       color: Color(0xFFB3B1B1),
                                       fontSize: 12,
                                       fontWeight: FontWeight.normal),
-                                  contentPadding: EdgeInsets.all(20),
+                                  contentPadding: const EdgeInsets.all(20),
                                   isDense: true,
 
                                   prefixIcon: Icon(
@@ -440,12 +440,13 @@ class _MyImageScreen extends State<ImageScreen> {
                                             Color.fromARGB(255, 234, 238, 237)),
                                   ),
                                   filled: true,
-                                  fillColor: Color.fromARGB(255, 255, 254, 255),
+                                  fillColor:
+                                      const Color.fromARGB(255, 255, 254, 255),
                                 ),
                                 readOnly: true,
                                 //set it true, so that user will not able to edit text
                                 onTap: () async {
-                                  DateTime? pickedDate = await pickDateTime();
+                                  await pickDateTime();
                                 },
                               )),
 
@@ -456,7 +457,8 @@ class _MyImageScreen extends State<ImageScreen> {
                             visible: isValediate,
                             child: Container(
                                 height: 50,
-                                margin: EdgeInsets.only(right: 30, left: 30),
+                                margin:
+                                    const EdgeInsets.only(right: 30, left: 30),
                                 child: Text(
                                   ValidationString,
                                   textAlign: TextAlign.center,
@@ -471,12 +473,13 @@ class _MyImageScreen extends State<ImageScreen> {
                           Container(
                             width: 60,
                             margin:
-                                EdgeInsets.only(right: 30, left: 30, top: 20),
+                                const EdgeInsets.only(
+                                right: 30, left: 30, top: 20),
                             height: 80,
                             child: ElevatedButton(
                               //style:ButtonStyle()
                               onPressed: () {
-                                Validate();
+                                validate();
                               },
                               child: const Text('أحجز موعدا الآن'),
                             ),
@@ -514,7 +517,7 @@ class _MyImageScreen extends State<ImageScreen> {
     });
 
     //----------------------- if  Time not where chosen ------------------------------//
-    TimeOfDay? time = await PickTime();
+    TimeOfDay? time = await pickTime();
     if (time == null) {
       setState(() {
         dateIsNotEmpty = false;
@@ -553,7 +556,7 @@ class _MyImageScreen extends State<ImageScreen> {
   //-----------------------------------------------------------------------------//
   ///----------------------------- get Time from Clock - -------------------------//
   ///-----------------------------------------------------------------------------//
-  Future<TimeOfDay?> PickTime() => showTimePicker(
+  Future<TimeOfDay?> pickTime() => showTimePicker(
       context: context,
       
       initialTime:
