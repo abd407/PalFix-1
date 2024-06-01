@@ -1,0 +1,5 @@
+claen project => flutter clean 
+
+build .aab =>  flutter build appbundle 
+
+reinstall pakages == flutter create .
