@@ -338,7 +338,7 @@ class _UserDashbordState extends State<UserDashbord> {
                   child: Stack(children: [
                     Positioned(
                         top: 200,
-                        height: MediaQuery.of(context).size.height * .7,
+                        height: MediaQuery.of(context).size.height * .46,
                         width: MediaQuery.of(context).size.width,
                         // ---------------------------------------------------------------//
                         //--------- This Section is for Work Grid-------------------------//
@@ -351,6 +351,8 @@ class _UserDashbordState extends State<UserDashbord> {
                                   size: 100),
                             ),
                             child: GridView.builder(
+                              shrinkWrap: true,
+                             
                               itemCount: _items?.length,
                               itemBuilder: (context, index) {
                                 if (_items![index].Status == 1) {
