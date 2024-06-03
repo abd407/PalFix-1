@@ -469,7 +469,7 @@ class _UserDashbordState extends State<UserDashbord> {
                         replacement: Center(
                           heightFactor: 1.2,
                           child: LoadingAnimationWidget.inkDrop(
-                              color: Color.fromARGB(255, 255, 255, 255),
+                              color: const Color.fromARGB(255, 255, 255, 255),
                               size: 50),
                         ),
                         child: CarouselSlider(
