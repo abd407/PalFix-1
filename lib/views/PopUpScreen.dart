@@ -51,6 +51,16 @@ class _MyImageScreen extends State<ImageScreen> {
     super.initState();
   }
 
+
+//-------------------------------------------------------------------------------//
+//----------------------- Navigate to Home Screen -------------------------------//
+//-------------------------------------------------------------------------------//
+
+  pushToHome(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) => const UserDashbord()),
+    );
+  }
   //------------------------------------------------------------------------------------//
   //------------------------------- Valediate Function ---------------------------------//
   //------------------------------------------------------------------------------------//
@@ -95,6 +105,7 @@ class _MyImageScreen extends State<ImageScreen> {
         ApiController.postAppointment(
             name, phone, date, address, problem, servic_id, showDialogResult);
       });
+      
     }
 
     return result;
@@ -111,11 +122,18 @@ class _MyImageScreen extends State<ImageScreen> {
           content: Text(result),
           actions: [
             TextButton(
-                onPressed: () => Navigator.of(context).pop(),
+                onPressed: () => pushToHome(context),
                 child: const Text("حسنا"))
           ],
         ),
+
+        
       );
+
+
+
+
+    
   //------------------------------------------------------------------------------------//
   //----------------------- WhatsUp and Phone Configuration ----------------------------//
   //------------------------------------------------------------------------------------//

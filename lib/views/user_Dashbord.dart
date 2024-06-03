@@ -369,8 +369,7 @@ class _UserDashbordState extends State<UserDashbord> {
                                                 child: Text(
                                                   _items![index].Title_ar,
                                                   style: const TextStyle(
-                                                    decoration: TextDecoration
-                                                        .underline,
+                                                   
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.bold,
                                                   ),
